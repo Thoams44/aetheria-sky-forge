@@ -1,4 +1,3 @@
-<<<<<<<
 import { Crown, ShieldCheck, ShieldQuestion } from "lucide-react";
 import type { Account } from "@/data/account";
 
@@ -39,4 +38,3 @@ export function AccountProfileHeader({ account }: { account: Account }) {
     </div>
   );
 }
->>>>>>>
