@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader } from "@/components/layout/PageShell";
-import { LeaderboardsSection } from "@/components/sections/LeaderboardsSection";
+import { RankingsBoard } from "@/components/rankings/RankingsBoard";
 
 const title = "Classements — Top joueurs et îles | AetheriaSky";
 const description =
@@ -23,10 +23,10 @@ function ClassementsPage() {
     <>
       <PageHeader
         eyebrow="Hall d'honneur"
-        title="Classements du royaume"
-        description="Mis à jour en direct depuis le serveur dès que la passerelle AetheriaCore sera branchée."
+        title="🏆 Classements AetheriaSky"
+        description="Découvrez les meilleurs joueurs et les meilleures îles d'AetheriaSky."
       />
-      <LeaderboardsSection />
+      <RankingsBoard />
     </>
   );
 }
