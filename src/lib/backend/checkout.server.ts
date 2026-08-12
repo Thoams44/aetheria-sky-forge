@@ -180,7 +180,8 @@ export async function startCheckout(input: {
         price_data: {
           currency: currency.toLowerCase(),
           unit_amount: toMinorUnit(i.unitPrice, currency),
-          product_data: { name: i.product.name },
+          // Biens numériques (grades, monnaie virtuelle) : code de taxe adapté.
+          product_data: { name: i.product.name, tax_code: "txcd_10000000" },
         },
       })),
       payment_intent_data: {
@@ -207,11 +208,18 @@ export async function startCheckout(input: {
         managed_payments: { enabled: true },
       } as Stripe.Checkout.SessionCreateParams);
     } catch {
-      // Repli : calcul et collecte de la TVA uniquement.
-      session = await stripe.checkout.sessions.create({
-        ...baseParams,
-        automatic_tax: { enabled: true },
-      } as Stripe.Checkout.SessionCreateParams);
+      try {
+        // Repli : calcul et collecte de la TVA uniquement.
+        session = await stripe.checkout.sessions.create({
+          ...baseParams,
+          automatic_tax: { enabled: true },
+        } as Stripe.Checkout.SessionCreateParams);
+      } catch {
+        // Dernier repli : paiement simple, TVA gérée manuellement.
+        session = await stripe.checkout.sessions.create(
+          baseParams as Stripe.Checkout.SessionCreateParams,
+        );
+      }
     }
 
     await supabaseAdmin
