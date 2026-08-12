@@ -14,12 +14,14 @@ import { Route as BoutiqueRouteImport } from './routes/boutique'
 import { Route as ClassementsRouteImport } from './routes/classements'
 import { Route as CommandeRouteImport } from './routes/commande'
 import { Route as CompteRouteImport } from './routes/compte'
+import { Route as PaiementRouteImport } from './routes/paiement'
 import { Route as PanierRouteImport } from './routes/panier'
 import { Route as ReglementRouteImport } from './routes/reglement'
 import { Route as VoteRouteImport } from './routes/vote'
 import { Route as AdminTestsRouteImport } from './routes/admin.tests'
 import { Route as BoutiqueIndexRouteImport } from './routes/boutique.index'
 import { Route as BoutiqueProductIdRouteImport } from './routes/boutique.$productId'
+import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -44,6 +46,11 @@ const CommandeRoute = CommandeRouteImport.update({
 const CompteRoute = CompteRouteImport.update({
   id: '/compte',
   path: '/compte',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PaiementRoute = PaiementRouteImport.update({
+  id: '/paiement',
+  path: '/paiement',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PanierRoute = PanierRouteImport.update({
@@ -76,6 +83,12 @@ const BoutiqueProductIdRoute = BoutiqueProductIdRouteImport.update({
   path: '/$productId',
   getParentRoute: () => BoutiqueRoute,
 } as any)
+const ApiPublicPaymentsWebhookRoute =
+  ApiPublicPaymentsWebhookRouteImport.update({
+    id: '/api/public/payments/webhook',
+    path: '/api/public/payments/webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -83,24 +96,28 @@ export interface FileRoutesByFullPath {
   '/classements': typeof ClassementsRoute
   '/commande': typeof CommandeRoute
   '/compte': typeof CompteRoute
+  '/paiement': typeof PaiementRoute
   '/panier': typeof PanierRoute
   '/reglement': typeof ReglementRoute
   '/vote': typeof VoteRoute
   '/admin/tests': typeof AdminTestsRoute
   '/boutique/$productId': typeof BoutiqueProductIdRoute
   '/boutique/': typeof BoutiqueIndexRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/classements': typeof ClassementsRoute
   '/commande': typeof CommandeRoute
   '/compte': typeof CompteRoute
+  '/paiement': typeof PaiementRoute
   '/panier': typeof PanierRoute
   '/reglement': typeof ReglementRoute
   '/vote': typeof VoteRoute
   '/admin/tests': typeof AdminTestsRoute
   '/boutique/$productId': typeof BoutiqueProductIdRoute
   '/boutique': typeof BoutiqueIndexRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -109,12 +126,14 @@ export interface FileRoutesById {
   '/classements': typeof ClassementsRoute
   '/commande': typeof CommandeRoute
   '/compte': typeof CompteRoute
+  '/paiement': typeof PaiementRoute
   '/panier': typeof PanierRoute
   '/reglement': typeof ReglementRoute
   '/vote': typeof VoteRoute
   '/admin/tests': typeof AdminTestsRoute
   '/boutique/$productId': typeof BoutiqueProductIdRoute
   '/boutique/': typeof BoutiqueIndexRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -124,24 +143,28 @@ export interface FileRouteTypes {
     | '/classements'
     | '/commande'
     | '/compte'
+    | '/paiement'
     | '/panier'
     | '/reglement'
     | '/vote'
     | '/admin/tests'
     | '/boutique/$productId'
     | '/boutique/'
+    | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/classements'
     | '/commande'
     | '/compte'
+    | '/paiement'
     | '/panier'
     | '/reglement'
     | '/vote'
     | '/admin/tests'
     | '/boutique/$productId'
     | '/boutique'
+    | '/api/public/payments/webhook'
   id:
     | '__root__'
     | '/'
@@ -149,12 +172,14 @@ export interface FileRouteTypes {
     | '/classements'
     | '/commande'
     | '/compte'
+    | '/paiement'
     | '/panier'
     | '/reglement'
     | '/vote'
     | '/admin/tests'
     | '/boutique/$productId'
     | '/boutique/'
+    | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -163,10 +188,12 @@ export interface RootRouteChildren {
   ClassementsRoute: typeof ClassementsRoute
   CommandeRoute: typeof CommandeRoute
   CompteRoute: typeof CompteRoute
+  PaiementRoute: typeof PaiementRoute
   PanierRoute: typeof PanierRoute
   ReglementRoute: typeof ReglementRoute
   VoteRoute: typeof VoteRoute
   AdminTestsRoute: typeof AdminTestsRoute
+  ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -204,6 +231,13 @@ declare module '@tanstack/react-router' {
       path: '/compte'
       fullPath: '/compte'
       preLoaderRoute: typeof CompteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/paiement': {
+      id: '/paiement'
+      path: '/paiement'
+      fullPath: '/paiement'
+      preLoaderRoute: typeof PaiementRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/panier': {
@@ -248,6 +282,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BoutiqueProductIdRouteImport
       parentRoute: typeof BoutiqueRoute
     }
+    '/api/public/payments/webhook': {
+      id: '/api/public/payments/webhook'
+      path: '/api/public/payments/webhook'
+      fullPath: '/api/public/payments/webhook'
+      preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -271,10 +312,12 @@ const rootRouteChildren: RootRouteChildren = {
   ClassementsRoute: ClassementsRoute,
   CommandeRoute: CommandeRoute,
   CompteRoute: CompteRoute,
+  PaiementRoute: PaiementRoute,
   PanierRoute: PanierRoute,
   ReglementRoute: ReglementRoute,
   VoteRoute: VoteRoute,
   AdminTestsRoute: AdminTestsRoute,
+  ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
