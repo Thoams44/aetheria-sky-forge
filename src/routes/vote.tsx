@@ -45,7 +45,10 @@ export const Route = createFileRoute("/vote")({
 });
 
 function VotePage() {
-  const { platforms, tiers, topVoters } = Route.useLoaderData();
+  const loaderData = Route.useLoaderData();
+  const platforms = loaderData?.platforms ?? [];
+  const tiers = loaderData?.tiers ?? [];
+  const topVoters = loaderData?.topVoters ?? [];
   const fetchProfile = useServerFn(getVoteProfile);
   const [profile, setProfile] = useState<VoteProfileDTO | null>(null);
 
