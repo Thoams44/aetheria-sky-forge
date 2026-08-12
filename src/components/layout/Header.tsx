@@ -5,9 +5,11 @@ import { Logo } from "@/components/brand/Logo";
 import { IpCopy } from "@/components/aether/IpCopy";
 import { mainNav, siteConfig } from "@/config/site";
 import { DiscordIcon } from "@/components/brand/DiscordIcon";
+import { useCart } from "@/lib/cart";
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const { count } = useCart();
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/80 bg-background/80 backdrop-blur-xl">
@@ -40,14 +42,18 @@ export function Header() {
           >
             <DiscordIcon className="h-4 w-4" />
           </a>
-          <button
-            type="button"
-            aria-label="Panier"
+          <Link
+            to="/panier"
+            aria-label={`Panier (${count} article${count > 1 ? "s" : ""})`}
             className="relative hidden h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-secondary/40 hover:text-foreground sm:flex"
           >
             <ShoppingCart size={16} />
-            <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-secondary" />
-          </button>
+            {count > 0 && (
+              <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-secondary px-1 text-[0.6rem] font-bold text-background">
+                {count}
+              </span>
+            )}
+          </Link>
           <Link
             to="/compte"
             className="hidden h-9 items-center gap-2 rounded-full border border-border bg-surface/60 px-4 text-xs font-semibold text-foreground transition-colors hover:border-secondary/40 sm:flex"
@@ -94,9 +100,16 @@ export function Header() {
                 <DiscordIcon className="h-4 w-4" /> Discord
               </a>
               <Link
-                to="/compte"
+                to="/panier"
                 onClick={() => setOpen(false)}
                 className="flex h-11 items-center justify-center gap-2 rounded-full border border-border text-xs font-semibold text-foreground"
+              >
+                <ShoppingCart size={14} /> Panier{count > 0 ? ` (${count})` : ""}
+              </Link>
+              <Link
+                to="/compte"
+                onClick={() => setOpen(false)}
+                className="col-span-2 flex h-11 items-center justify-center gap-2 rounded-full border border-border text-xs font-semibold text-foreground"
               >
                 <User size={14} /> Mon compte
               </Link>

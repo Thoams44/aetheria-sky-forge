@@ -12,7 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BoutiqueRouteImport } from './routes/boutique'
 import { Route as ClassementsRouteImport } from './routes/classements'
+import { Route as CommandeRouteImport } from './routes/commande'
 import { Route as CompteRouteImport } from './routes/compte'
+import { Route as PanierRouteImport } from './routes/panier'
 import { Route as ReglementRouteImport } from './routes/reglement'
 import { Route as VoteRouteImport } from './routes/vote'
 import { Route as BoutiqueIndexRouteImport } from './routes/boutique.index'
@@ -33,9 +35,19 @@ const ClassementsRoute = ClassementsRouteImport.update({
   path: '/classements',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CommandeRoute = CommandeRouteImport.update({
+  id: '/commande',
+  path: '/commande',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CompteRoute = CompteRouteImport.update({
   id: '/compte',
   path: '/compte',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PanierRoute = PanierRouteImport.update({
+  id: '/panier',
+  path: '/panier',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReglementRoute = ReglementRouteImport.update({
@@ -63,7 +75,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/boutique': typeof BoutiqueRouteWithChildren
   '/classements': typeof ClassementsRoute
+  '/commande': typeof CommandeRoute
   '/compte': typeof CompteRoute
+  '/panier': typeof PanierRoute
   '/reglement': typeof ReglementRoute
   '/vote': typeof VoteRoute
   '/boutique/$productId': typeof BoutiqueProductIdRoute
@@ -72,7 +86,9 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/classements': typeof ClassementsRoute
+  '/commande': typeof CommandeRoute
   '/compte': typeof CompteRoute
+  '/panier': typeof PanierRoute
   '/reglement': typeof ReglementRoute
   '/vote': typeof VoteRoute
   '/boutique/$productId': typeof BoutiqueProductIdRoute
@@ -83,7 +99,9 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/boutique': typeof BoutiqueRouteWithChildren
   '/classements': typeof ClassementsRoute
+  '/commande': typeof CommandeRoute
   '/compte': typeof CompteRoute
+  '/panier': typeof PanierRoute
   '/reglement': typeof ReglementRoute
   '/vote': typeof VoteRoute
   '/boutique/$productId': typeof BoutiqueProductIdRoute
@@ -95,7 +113,9 @@ export interface FileRouteTypes {
     | '/'
     | '/boutique'
     | '/classements'
+    | '/commande'
     | '/compte'
+    | '/panier'
     | '/reglement'
     | '/vote'
     | '/boutique/$productId'
@@ -104,7 +124,9 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/classements'
+    | '/commande'
     | '/compte'
+    | '/panier'
     | '/reglement'
     | '/vote'
     | '/boutique/$productId'
@@ -114,7 +136,9 @@ export interface FileRouteTypes {
     | '/'
     | '/boutique'
     | '/classements'
+    | '/commande'
     | '/compte'
+    | '/panier'
     | '/reglement'
     | '/vote'
     | '/boutique/$productId'
@@ -125,7 +149,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BoutiqueRoute: typeof BoutiqueRouteWithChildren
   ClassementsRoute: typeof ClassementsRoute
+  CommandeRoute: typeof CommandeRoute
   CompteRoute: typeof CompteRoute
+  PanierRoute: typeof PanierRoute
   ReglementRoute: typeof ReglementRoute
   VoteRoute: typeof VoteRoute
 }
@@ -153,11 +179,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClassementsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/commande': {
+      id: '/commande'
+      path: '/commande'
+      fullPath: '/commande'
+      preLoaderRoute: typeof CommandeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/compte': {
       id: '/compte'
       path: '/compte'
       fullPath: '/compte'
       preLoaderRoute: typeof CompteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/panier': {
+      id: '/panier'
+      path: '/panier'
+      fullPath: '/panier'
+      preLoaderRoute: typeof PanierRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reglement': {
@@ -209,7 +249,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BoutiqueRoute: BoutiqueRouteWithChildren,
   ClassementsRoute: ClassementsRoute,
+  CommandeRoute: CommandeRoute,
   CompteRoute: CompteRoute,
+  PanierRoute: PanierRoute,
   ReglementRoute: ReglementRoute,
   VoteRoute: VoteRoute,
 }
