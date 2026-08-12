@@ -14,6 +14,7 @@ import { Route as BoutiqueRouteImport } from './routes/boutique'
 import { Route as ClassementsRouteImport } from './routes/classements'
 import { Route as CommandeRouteImport } from './routes/commande'
 import { Route as CompteRouteImport } from './routes/compte'
+import { Route as PaiementRouteImport } from './routes/paiement'
 import { Route as PanierRouteImport } from './routes/panier'
 import { Route as ReglementRouteImport } from './routes/reglement'
 import { Route as VoteRouteImport } from './routes/vote'
@@ -45,6 +46,11 @@ const CommandeRoute = CommandeRouteImport.update({
 const CompteRoute = CompteRouteImport.update({
   id: '/compte',
   path: '/compte',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PaiementRoute = PaiementRouteImport.update({
+  id: '/paiement',
+  path: '/paiement',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PanierRoute = PanierRouteImport.update({
@@ -90,6 +96,7 @@ export interface FileRoutesByFullPath {
   '/classements': typeof ClassementsRoute
   '/commande': typeof CommandeRoute
   '/compte': typeof CompteRoute
+  '/paiement': typeof PaiementRoute
   '/panier': typeof PanierRoute
   '/reglement': typeof ReglementRoute
   '/vote': typeof VoteRoute
@@ -103,6 +110,7 @@ export interface FileRoutesByTo {
   '/classements': typeof ClassementsRoute
   '/commande': typeof CommandeRoute
   '/compte': typeof CompteRoute
+  '/paiement': typeof PaiementRoute
   '/panier': typeof PanierRoute
   '/reglement': typeof ReglementRoute
   '/vote': typeof VoteRoute
@@ -118,6 +126,7 @@ export interface FileRoutesById {
   '/classements': typeof ClassementsRoute
   '/commande': typeof CommandeRoute
   '/compte': typeof CompteRoute
+  '/paiement': typeof PaiementRoute
   '/panier': typeof PanierRoute
   '/reglement': typeof ReglementRoute
   '/vote': typeof VoteRoute
@@ -134,6 +143,7 @@ export interface FileRouteTypes {
     | '/classements'
     | '/commande'
     | '/compte'
+    | '/paiement'
     | '/panier'
     | '/reglement'
     | '/vote'
@@ -147,6 +157,7 @@ export interface FileRouteTypes {
     | '/classements'
     | '/commande'
     | '/compte'
+    | '/paiement'
     | '/panier'
     | '/reglement'
     | '/vote'
@@ -161,6 +172,7 @@ export interface FileRouteTypes {
     | '/classements'
     | '/commande'
     | '/compte'
+    | '/paiement'
     | '/panier'
     | '/reglement'
     | '/vote'
@@ -176,6 +188,7 @@ export interface RootRouteChildren {
   ClassementsRoute: typeof ClassementsRoute
   CommandeRoute: typeof CommandeRoute
   CompteRoute: typeof CompteRoute
+  PaiementRoute: typeof PaiementRoute
   PanierRoute: typeof PanierRoute
   ReglementRoute: typeof ReglementRoute
   VoteRoute: typeof VoteRoute
@@ -218,6 +231,13 @@ declare module '@tanstack/react-router' {
       path: '/compte'
       fullPath: '/compte'
       preLoaderRoute: typeof CompteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/paiement': {
+      id: '/paiement'
+      path: '/paiement'
+      fullPath: '/paiement'
+      preLoaderRoute: typeof PaiementRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/panier': {
@@ -292,6 +312,7 @@ const rootRouteChildren: RootRouteChildren = {
   ClassementsRoute: ClassementsRoute,
   CommandeRoute: CommandeRoute,
   CompteRoute: CompteRoute,
+  PaiementRoute: PaiementRoute,
   PanierRoute: PanierRoute,
   ReglementRoute: ReglementRoute,
   VoteRoute: VoteRoute,
