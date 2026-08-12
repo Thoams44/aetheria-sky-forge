@@ -1,10 +1,10 @@
 import { Crown, Trophy } from "lucide-react";
-import { topVoters } from "@/data/vote";
+import type { TopVoterDTO } from "@/lib/backend/vote.functions";
 import { formatVotes } from "@/lib/vote";
 
 const podium = ["text-premium", "text-secondary", "text-info"];
 
-export function TopVoters() {
+export function TopVoters({ voters }: { voters: TopVoterDTO[] }) {
   return (
     <div className="aether-surface rounded-2xl p-6 sm:p-8">
       <div className="flex flex-wrap items-center gap-3">
@@ -15,38 +15,45 @@ export function TopVoters() {
         </span>
       </div>
 
-      <ul className="mt-6 divide-y divide-border">
-        {topVoters.map((voter) => {
-          const isPodium = voter.rank <= 3;
-          return (
-            <li key={voter.rank} className="flex items-center gap-4 py-3.5">
-              <span
-                className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-semibold ${
-                  isPodium
-                    ? `bg-accent/60 ${podium[voter.rank - 1]}`
-                    : "bg-accent/30 text-muted-foreground"
-                }`}
-              >
-                {voter.rank}
-              </span>
-              <span
-                className={`flex items-center gap-2 text-sm ${
-                  isPodium ? "font-semibold text-foreground" : "text-muted-foreground"
-                }`}
-              >
-                {voter.rank === 1 && <Crown size={14} className="text-premium" />}
-                {voter.name}
-              </span>
-              <span className="ml-auto text-sm text-muted-foreground">
-                {formatVotes(voter.votes)} votes
-              </span>
-            </li>
-          );
-        })}
-      </ul>
+      {voters.length === 0 ? (
+        <p className="mt-6 rounded-xl border border-dashed border-border px-4 py-8 text-center text-sm text-muted-foreground">
+          Aucun vote enregistré pour le moment. Le classement se remplira dès les
+          premiers votes validés.
+        </p>
+      ) : (
+        <ul className="mt-6 divide-y divide-border">
+          {voters.map((voter) => {
+            const isPodium = voter.rank <= 3;
+            return (
+              <li key={voter.rank} className="flex items-center gap-4 py-3.5">
+                <span
+                  className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-semibold ${
+                    isPodium
+                      ? `bg-accent/60 ${podium[voter.rank - 1]}`
+                      : "bg-accent/30 text-muted-foreground"
+                  }`}
+                >
+                  {voter.rank}
+                </span>
+                <span
+                  className={`flex items-center gap-2 text-sm ${
+                    isPodium ? "font-semibold text-foreground" : "text-muted-foreground"
+                  }`}
+                >
+                  {voter.rank === 1 && <Crown size={14} className="text-premium" />}
+                  {voter.name}
+                </span>
+                <span className="ml-auto text-sm text-muted-foreground">
+                  {formatVotes(voter.votes)} votes
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      )}
       <p className="mt-5 text-xs text-muted-foreground">
-        Classement de démonstration. Le classement mensuel réel sera alimenté par
-        le backend AetheriaSky.
+        Classement calculé à partir des votes validés enregistrés par le backend
+        AetheriaSky.
       </p>
     </div>
   );

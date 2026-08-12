@@ -1,9 +1,9 @@
 import { Compass, Flag, Radio, Star, ExternalLink, Lock } from "lucide-react";
-import type { PlatformVoteState, VoteIconKey, VotePlatform } from "@/data/vote";
-import { nextVoteLabel, voteStatusLabel, voteStatusTone } from "@/lib/vote";
+import type { PlatformStateDTO, VotePlatformDTO } from "@/lib/backend/vote.functions";
+import { formatCooldown, nextVoteLabel, voteStatusLabel, voteStatusTone } from "@/lib/vote";
 import { buttonClasses } from "@/components/aether/AetherButton";
 
-const icons: Record<VoteIconKey, typeof Star> = {
+const icons: Record<string, typeof Star> = {
   star: Star,
   compass: Compass,
   flag: Flag,
@@ -14,12 +14,12 @@ export function VotePlatformCard({
   platform,
   state,
 }: {
-  platform: VotePlatform;
-  state?: PlatformVoteState | undefined;
+  platform: VotePlatformDTO;
+  state?: PlatformStateDTO | undefined;
 }) {
-  const Icon = icons[platform.icon];
+  const Icon = icons[platform.icon ?? "star"] ?? Star;
   const status = state?.status ?? "available";
-  const canVote = platform.enabled && Boolean(platform.voteUrl) && status === "available";
+  const canVote = Boolean(platform.voteUrl) && status === "available";
 
   return (
     <article className="aether-surface flex flex-col rounded-2xl p-6 transition-colors duration-300 hover:border-secondary/35">
@@ -45,14 +45,14 @@ export function VotePlatformCard({
             Prochain vote
           </dt>
           <dd className="mt-1 text-foreground">
-            {nextVoteLabel(status, platform.cooldownHours)}
+            {nextVoteLabel(status, platform.cooldownSeconds, state?.nextVoteAt)}
           </dd>
         </div>
         <div>
           <dt className="text-[0.58rem] uppercase tracking-[0.16em] text-muted-foreground">
             Récompense
           </dt>
-          <dd className="mt-1 text-foreground">{platform.reward}</dd>
+          <dd className="mt-1 text-foreground">+1 Clé de Vote</dd>
         </div>
       </dl>
 
@@ -77,7 +77,8 @@ export function VotePlatformCard({
         )}
       </div>
       <p className="mt-3 text-[0.68rem] text-muted-foreground">
-        Cooldown : toutes les {platform.cooldownHours}h · une seule récompense par vote.
+        Cooldown : toutes les {formatCooldown(platform.cooldownSeconds)} · une seule
+        récompense par vote.
       </p>
     </article>
   );

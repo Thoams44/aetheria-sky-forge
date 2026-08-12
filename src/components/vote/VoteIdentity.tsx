@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, Gem, ShieldAlert, User } from "lucide-react";
+import { ArrowRight, Coins, ShieldAlert, User } from "lucide-react";
 import { AetherButton } from "@/components/aether/AetherButton";
 import { formatVotes } from "@/lib/vote";
 
@@ -22,7 +22,8 @@ export function VoteIdentityForm({ onSubmit }: { onSubmit: (username: string) =>
         <User size={15} className="text-secondary" /> Votre pseudo Minecraft
       </label>
       <p className="mt-2 text-sm text-muted-foreground">
-        Indiquez votre pseudo pour consulter votre statut de vote et vos Éclats.
+        Indiquez votre pseudo pour consulter votre progression de vote enregistrée
+        par le backend AetheriaSky.
       </p>
       <div className="mt-5 flex flex-col gap-3 sm:flex-row">
         <input
@@ -49,21 +50,25 @@ export function VoteIdentityForm({ onSubmit }: { onSubmit: (username: string) =>
 
 export function VoteProfileCard({
   username,
-  shards,
   monthlyVotes,
-  monthlyGoal,
+  goal,
   totalVotes,
+  coinsFromTiers,
+  nextTierReward,
+  pendingVoteKeys,
   onChange,
 }: {
   username: string;
-  shards: number;
   monthlyVotes: number;
-  monthlyGoal: number;
+  goal: number;
   totalVotes: number;
+  coinsFromTiers: number;
+  nextTierReward: string | null;
+  pendingVoteKeys: number;
   onChange: () => void;
 }) {
-  const percent = Math.min(100, Math.round((monthlyVotes / monthlyGoal) * 100));
-  const remaining = Math.max(0, monthlyGoal - monthlyVotes);
+  const percent = goal > 0 ? Math.min(100, Math.round((totalVotes / goal) * 100)) : 100;
+  const remaining = Math.max(0, goal - totalVotes);
 
   return (
     <div className="aether-surface aether-glow rounded-2xl p-6 sm:p-8">
@@ -72,7 +77,7 @@ export function VoteProfileCard({
           <User size={19} />
         </span>
         <div>
-          <p className="eyebrow">Progression du mois</p>
+          <p className="eyebrow">Progression des paliers</p>
           <p className="font-display text-xl text-foreground">{username}</p>
         </div>
         <button
@@ -86,8 +91,8 @@ export function VoteProfileCard({
 
       <div className="mt-7 flex items-end justify-between gap-4">
         <p className="font-display text-4xl text-foreground">
-          {monthlyVotes}
-          <span className="text-muted-foreground"> / {monthlyGoal}</span>
+          {totalVotes}
+          <span className="text-muted-foreground"> / {goal || totalVotes}</span>
           <span className="ml-2 text-sm text-muted-foreground">votes</span>
         </p>
         <span className="rounded-full border border-premium/40 bg-premium/10 px-3 py-1 text-xs font-semibold text-premium">
@@ -102,28 +107,33 @@ export function VoteProfileCard({
       </div>
 
       <dl className="mt-7 grid gap-3 sm:grid-cols-3">
-        <Stat label="Votes effectués" value={formatVotes(monthlyVotes)} />
-        <Stat label="Votes restants" value={formatVotes(remaining)} />
-        <Stat label="Votes au total" value={formatVotes(totalVotes)} />
+        <Stat label="Votes ce mois-ci" value={formatVotes(monthlyVotes)} />
+        <Stat
+          label="Votes restants"
+          value={remaining > 0 ? formatVotes(remaining) : "—"}
+        />
+        <Stat label="Clés de Vote en attente" value={formatVotes(pendingVoteKeys)} />
       </dl>
 
-      <div className="mt-4 flex items-center gap-3 rounded-2xl border border-info/25 bg-info/8 px-4 py-4">
-        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-info/12 text-info">
-          <Gem size={18} />
+      <div className="mt-4 flex items-center gap-3 rounded-2xl border border-premium/25 bg-premium/8 px-4 py-4">
+        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-premium/12 text-premium">
+          <Coins size={18} />
         </span>
         <div>
           <p className="text-[0.62rem] uppercase tracking-[0.2em] text-muted-foreground">
-            Éclats gagnés
+            Aether Coins obtenus via les paliers
           </p>
           <p className="font-display text-2xl text-foreground">
-            {formatVotes(shards)} <span className="text-sm text-muted-foreground">Éclats</span>
+            {formatVotes(coinsFromTiers)} <span className="text-sm text-muted-foreground">AC</span>
           </p>
         </div>
       </div>
       <p className="mt-4 text-xs text-muted-foreground">
-        Chaque vote validé donne 1 Clé de Vote en jeu, et chaque palier atteint
-        verse des Aether Coins (AC). Les Éclats restent une monnaie distincte,
-        conservée pour de futurs usages.
+        {nextTierReward
+          ? `Prochain palier : ${nextTierReward}.`
+          : "Tous les paliers sont débloqués."}{" "}
+        Chaque vote validé crée une Clé de Vote livrée en jeu par AetheriaCore ;
+        les Éclats restent une monnaie distincte.
       </p>
     </div>
   );

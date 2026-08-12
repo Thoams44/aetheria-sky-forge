@@ -1,10 +1,17 @@
 import { Check, Coins, Crown, KeyRound, Lock } from "lucide-react";
-import { voteTiers } from "@/data/vote";
+import type { VoteTierDTO } from "@/lib/backend/vote.functions";
 import { getTierProgress } from "@/lib/vote";
 
-export function VoteTierList({ votes }: { votes: number }) {
-  const progress = getTierProgress(votes, voteTiers);
-  const finalVotes = voteTiers[voteTiers.length - 1]?.votes ?? 150;
+export function VoteTierList({ votes, tiers }: { votes: number; tiers: VoteTierDTO[] }) {
+  if (tiers.length === 0) {
+    return (
+      <p className="rounded-2xl border border-dashed border-border px-4 py-10 text-center text-sm text-muted-foreground">
+        Les paliers de vote seront bientôt disponibles.
+      </p>
+    );
+  }
+  const progress = getTierProgress(votes, tiers);
+  const finalVotes = tiers[tiers.length - 1]?.votes ?? 150;
 
   return (
     <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6">
