@@ -22,7 +22,8 @@ export function VoteIdentityForm({ onSubmit }: { onSubmit: (username: string) =>
         <User size={15} className="text-secondary" /> Votre pseudo Minecraft
       </label>
       <p className="mt-2 text-sm text-muted-foreground">
-        Indiquez votre pseudo pour consulter votre statut de vote et vos Éclats.
+        Indiquez votre pseudo pour consulter votre progression de vote enregistrée
+        par le backend AetheriaSky.
       </p>
       <div className="mt-5 flex flex-col gap-3 sm:flex-row">
         <input
