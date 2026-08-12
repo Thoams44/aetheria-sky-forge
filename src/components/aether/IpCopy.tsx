@@ -32,7 +32,7 @@ export function IpCopy({
       </span>
       <span
         className={cn(
-          "flex items-center gap-1.5 rounded-full px-3 font-semibold uppercase tracking-[0.18em] transition-colors duration-300",
+          "flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3 font-semibold uppercase tracking-[0.18em] transition-colors duration-300",
           size === "md" ? "h-9 text-[0.65rem]" : "h-6.5 text-[0.58rem]",
           copied
             ? "bg-success/15 text-success"
