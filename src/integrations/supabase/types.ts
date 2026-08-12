@@ -14,16 +14,149 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      grades: {
+        Row: {
+          active: boolean
+          advantages: Json
+          color: string | null
+          created_at: string
+          currency: string
+          description: string | null
+          display_order: number
+          icon: string | null
+          id: string
+          name: string
+          price: number | null
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          advantages?: Json
+          color?: string | null
+          created_at?: string
+          currency?: string
+          description?: string | null
+          display_order?: number
+          icon?: string | null
+          id?: string
+          name: string
+          price?: number | null
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          advantages?: Json
+          color?: string | null
+          created_at?: string
+          currency?: string
+          description?: string | null
+          display_order?: number
+          icon?: string | null
+          id?: string
+          name?: string
+          price?: number | null
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      players: {
+        Row: {
+          aether_coins_balance: number
+          created_at: string
+          grade_expires_at: string | null
+          grade_id: string | null
+          grade_obtained_at: string | null
+          id: string
+          last_seen_at: string | null
+          minecraft_username: string | null
+          minecraft_uuid: string | null
+          shards_balance: number
+          updated_at: string
+          user_id: string | null
+          verified: boolean
+        }
+        Insert: {
+          aether_coins_balance?: number
+          created_at?: string
+          grade_expires_at?: string | null
+          grade_id?: string | null
+          grade_obtained_at?: string | null
+          id?: string
+          last_seen_at?: string | null
+          minecraft_username?: string | null
+          minecraft_uuid?: string | null
+          shards_balance?: number
+          updated_at?: string
+          user_id?: string | null
+          verified?: boolean
+        }
+        Update: {
+          aether_coins_balance?: number
+          created_at?: string
+          grade_expires_at?: string | null
+          grade_id?: string | null
+          grade_obtained_at?: string | null
+          id?: string
+          last_seen_at?: string | null
+          minecraft_username?: string | null
+          minecraft_uuid?: string | null
+          shards_balance?: number
+          updated_at?: string
+          user_id?: string | null
+          verified?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "players_grade_id_fkey"
+            columns: ["grade_id"]
+            isOneToOne: false
+            referencedRelation: "grades"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      current_player_id: { Args: never; Returns: string }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_admin: { Args: { _user_id: string }; Returns: boolean }
+      is_staff: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "player" | "staff" | "admin" | "founder"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +283,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["player", "staff", "admin", "founder"],
+    },
   },
 } as const
