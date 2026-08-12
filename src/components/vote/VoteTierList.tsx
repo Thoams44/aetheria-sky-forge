@@ -4,7 +4,7 @@ import { getTierProgress } from "@/lib/vote";
 
 export function VoteTierList({ votes }: { votes: number }) {
   const progress = getTierProgress(votes, voteTiers);
-  const finalVotes = voteTiers[voteTiers.length - 1].votes;
+  const finalVotes = voteTiers[voteTiers.length - 1]?.votes ?? 150;
 
   return (
     <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6">
