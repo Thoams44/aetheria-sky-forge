@@ -28,7 +28,7 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   size?: Size;
 };
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+export const AetherButton = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "primary", size = "md", ...props }, ref) => (
     <button
       ref={ref}
@@ -37,7 +37,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     />
   ),
 );
-Button.displayName = "Button";
+AetherButton.displayName = "AetherButton";
 
 export function buttonClasses(variant: Variant = "primary", size: Size = "md") {
   return cn(base, variants[variant], sizes[size]);
