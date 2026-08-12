@@ -16,7 +16,9 @@ export async function loadShopCatalog(): Promise<ShopProductDTO[]> {
     await Promise.all([
       supabase
         .from("store_products")
-        .select("id, name, slug, type, description, price, currency, quantity, grade_id, display_order")
+        .select(
+          "id, name, slug, type, description, price, currency, quantity, bonus_quantity, grade_id, display_order",
+        )
         .eq("active", true)
         .order("display_order"),
       supabase
@@ -53,7 +55,13 @@ export async function loadShopCatalog(): Promise<ShopProductDTO[]> {
       active: true,
       displayOrder: p.display_order,
       ...(presentation.badge ? { badge: presentation.badge } : {}),
-      ...(p.quantity ? { amount: p.quantity } : {}),
+      ...(p.quantity
+        ? {
+            baseAmount: p.quantity,
+            bonusAmount: p.bonus_quantity ?? 0,
+            amount: p.quantity + (p.bonus_quantity ?? 0),
+          }
+        : {}),
     } satisfies ShopProductDTO;
   });
 }

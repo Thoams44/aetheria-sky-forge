@@ -21,6 +21,8 @@ export type ShopProductDTO = {
   displayOrder: number;
   badge?: string;
   amount?: number;
+  baseAmount?: number;
+  bonusAmount?: number;
 };
 
 export type OrderConfirmationDTO = {
