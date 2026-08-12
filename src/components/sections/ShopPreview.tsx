@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Coins, Sparkles } from "lucide-react";
-import islandImage from "@/assets/island-crystal.jpg";
+import coinsImage from "@/assets/aether-coins.jpg";
 import { Section, SectionHeading } from "@/components/aether/Section";
 import { grades } from "@/data/shop";
 import { cn } from "@/lib/utils";
@@ -58,9 +58,13 @@ export function ShopPreview() {
           </span>
           <h3 className="mt-5 font-display text-2xl text-foreground">Aether Coins</h3>
           <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
-            La monnaie premium d'AetheriaSky. Elle se dépense en jeu, à ton
-            rythme : cosmétiques, clés, extensions d'île et récompenses
-            saisonnières.
+            La monnaie premium d'AetheriaSky, achetée sur la boutique du site
+            puis dépensée en jeu : clés, cosmétiques, récompenses et contenus de
+            la boutique Minecraft.
+          </p>
+          <p className="mt-3 max-w-md text-xs leading-relaxed text-muted-foreground">
+            À ne pas confondre avec les <span className="text-info">Éclats</span>,
+            la monnaie gratuite obtenue grâce aux votes.
           </p>
           <Link
             to="/boutique"
@@ -70,8 +74,8 @@ export function ShopPreview() {
           </Link>
         </div>
         <img
-          src={islandImage}
-          alt="Île flottante avec cristal d'Aether"
+          src={coinsImage}
+          alt="Aether Coins, pièces magiques violettes gravées d'or"
           loading="lazy"
           width={1024}
           height={768}
