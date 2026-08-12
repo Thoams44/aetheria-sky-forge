@@ -70,7 +70,7 @@ function ProductPage() {
               Avantages
             </h3>
             <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-              {(product.advantages.length ? product.advantages : ["Contenu à définir"]).map(
+              {(product.advantages.length ? product.advantages : ["Contenu à définir"]).map<string, JSX.Element>(
                 (a, i) => (
                   <li
                     key={`${product.id}-detail-${i}`}
