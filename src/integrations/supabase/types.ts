@@ -340,6 +340,7 @@ export type Database = {
       }
       player_milestone_claims: {
         Row: {
+          aether_coins_granted: number
           claimed_at: string
           id: string
           milestone_id: string
@@ -347,6 +348,7 @@ export type Database = {
           shards_granted: number
         }
         Insert: {
+          aether_coins_granted?: number
           claimed_at?: string
           id?: string
           milestone_id: string
@@ -354,6 +356,7 @@ export type Database = {
           shards_granted?: number
         }
         Update: {
+          aether_coins_granted?: number
           claimed_at?: string
           id?: string
           milestone_id?: string
@@ -513,6 +516,8 @@ export type Database = {
       vote_milestones: {
         Row: {
           active: boolean
+          aether_coins_reward: number
+          bonus_reward: string | null
           created_at: string
           display_order: number
           id: string
@@ -522,6 +527,8 @@ export type Database = {
         }
         Insert: {
           active?: boolean
+          aether_coins_reward?: number
+          bonus_reward?: string | null
           created_at?: string
           display_order?: number
           id?: string
@@ -531,6 +538,8 @@ export type Database = {
         }
         Update: {
           active?: boolean
+          aether_coins_reward?: number
+          bonus_reward?: string | null
           created_at?: string
           display_order?: number
           id?: string

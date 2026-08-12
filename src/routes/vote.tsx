@@ -9,9 +9,9 @@ import { VoteHistory } from "@/components/vote/VoteHistory";
 import { VoteIdentityForm, VoteProfileCard } from "@/components/vote/VoteIdentity";
 import { demoVoteProfile, votePlatforms } from "@/data/vote";
 
-const title = "Vote pour AetheriaSky — Gagne des Éclats";
+const title = "Vote pour AetheriaSky — Gagne des Aether Coins";
 const description =
-  "Vote pour AetheriaSky sur les plateformes partenaires, gagne des Éclats, débloque les paliers de récompenses et grimpe au classement des meilleurs voteurs.";
+  "Vote pour AetheriaSky sur les plateformes partenaires : 1 Clé de Vote par vote, des Aether Coins à chaque palier atteint et une place au classement des meilleurs voteurs.";
 
 export const Route = createFileRoute("/vote")({
   head: () => ({
@@ -36,7 +36,7 @@ function VotePage() {
       <PageHeader
         eyebrow="Vote"
         title="Vote pour AetheriaSky"
-        description="Soutiens le serveur, gagne des Éclats et participe au classement des meilleurs voteurs."
+        description="Soutiens le serveur : chaque vote donne 1 Clé de Vote en jeu, et chaque palier atteint rapporte des Aether Coins."
       />
 
       <Section className="border-b border-border">
@@ -82,7 +82,7 @@ function VotePage() {
         <SectionHeading
           eyebrow="Paliers"
           title="Récompenses de vote"
-          description="Les paliers sont cumulatifs : atteindre 150 votes signifie avoir débloqué les 6 paliers. Les récompenses sont versées en Éclats."
+          description="Les paliers sont cumulatifs : atteindre 150 votes signifie avoir débloqué les 6 paliers. Les récompenses sont versées en Aether Coins (AC), le palier final ajoutant une clé spéciale."
         />
         <div className="mt-10">
           <VoteTierList votes={votes} />

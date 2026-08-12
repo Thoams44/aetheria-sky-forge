@@ -1,4 +1,4 @@
-import { Check, Crown, Gem, Lock } from "lucide-react";
+import { Check, Coins, Crown, KeyRound, Lock } from "lucide-react";
 import { voteTiers } from "@/data/vote";
 import { getTierProgress } from "@/lib/vote";
 
@@ -36,8 +36,13 @@ export function VoteTierList({ votes }: { votes: number }) {
             <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">votes</p>
 
             <p className="mt-4 flex items-center gap-2 text-sm text-foreground">
-              <Gem size={14} className="text-info" /> {tier.reward}
+              <Coins size={14} className="text-premium" /> {tier.coins} AC
             </p>
+            {tier.bonus && (
+              <p className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
+                <KeyRound size={13} className="text-premium" /> {tier.bonus}
+              </p>
+            )}
 
             <p className="mt-4 flex items-center gap-2 text-xs font-semibold">
               {state === "unlocked" ? (

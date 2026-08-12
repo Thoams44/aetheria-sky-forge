@@ -1,4 +1,4 @@
-import { Gem, Lock } from "lucide-react";
+import { Coins, Lock } from "lucide-react";
 import { Section, SectionHeading } from "@/components/aether/Section";
 import { votePlatforms, voteProgress, voteTiers } from "@/data/vote";
 
@@ -12,7 +12,7 @@ export function VoteSection() {
           <SectionHeading
             eyebrow="Vote"
             title="Soutiens AetheriaSky"
-            description="Voter prend dix secondes et fait remonter le serveur dans les classements. Chaque vote alimente une cagnotte commune : quand le palier tombe, tout le monde reçoit des Éclats, la monnaie gratuite du vote."
+            description="Voter prend dix secondes et fait remonter le serveur dans les classements. Chaque vote rapporte une Clé de Vote en jeu, et les paliers atteints versent des Aether Coins."
           />
           <div className="mt-8 grid gap-2.5 sm:grid-cols-2">
             {votePlatforms.map((p) => (
@@ -57,12 +57,12 @@ export function VoteSection() {
           </div>
 
           <div className="mt-6 flex items-center gap-3 rounded-2xl border border-border bg-background/50 px-4 py-4">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-info/12 text-info">
-              <Gem size={18} />
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-premium/12 text-premium">
+              <Coins size={18} />
             </span>
             <div>
               <p className="text-[0.65rem] uppercase tracking-[0.22em] text-muted-foreground">
-                Prochaine récompense — Éclats
+                Prochaine récompense — Aether Coins
               </p>
               <p className="font-display text-lg text-foreground">
                 {voteProgress.nextReward}
@@ -81,8 +81,8 @@ export function VoteSection() {
                   <span
                     className={`flex items-center gap-2 ${reached ? "text-foreground" : "text-muted-foreground"}`}
                   >
-                    <Gem size={13} className="text-info" />
-                    {tier.votes} votes — Éclats · {tier.reward}
+                    <Coins size={13} className="text-premium" />
+                    {tier.votes} votes — {tier.reward}
                   </span>
                   <span
                     className={`text-xs font-semibold ${reached ? "text-success" : "text-muted-foreground"}`}
@@ -94,9 +94,8 @@ export function VoteSection() {
             })}
           </ul>
           <p className="mt-6 text-xs text-muted-foreground">
-            Les Éclats sont une monnaie gratuite obtenue par le vote, distincte
-            des Aether Coins de la boutique. Quantités et plateformes de vote à
-            venir.
+            Chaque vote validé donne 1 Clé de Vote en jeu. Les paliers, eux,
+            sont récompensés en Aether Coins (AC). Plateformes de vote à venir.
           </p>
         </div>
       </div>
