@@ -15,7 +15,7 @@ export function VotePlatformCard({
   state,
 }: {
   platform: VotePlatform;
-  state?: PlatformVoteState;
+  state?: PlatformVoteState | undefined;
 }) {
   const Icon = icons[platform.icon];
   const status = state?.status ?? "available";

@@ -15,6 +15,11 @@ export function VoteHistory({ entries }: { entries: VoteHistoryEntry[] }) {
         <h3 className="font-display text-lg text-foreground">Historique des votes</h3>
       </div>
 
+      {entries.length === 0 ? (
+        <p className="mt-6 rounded-xl border border-dashed border-border px-4 py-8 text-center text-sm text-muted-foreground">
+          Entrez votre pseudo Minecraft pour afficher votre historique de votes.
+        </p>
+      ) : (
       <div className="mt-6 overflow-x-auto">
         <table className="w-full min-w-[32rem] text-left text-sm">
           <thead>
@@ -45,6 +50,7 @@ export function VoteHistory({ entries }: { entries: VoteHistoryEntry[] }) {
           </tbody>
         </table>
       </div>
+      )}
       <p className="mt-5 text-xs text-muted-foreground">
         Données fictives. L'historique sera alimenté par les votes réels validés.
       </p>
