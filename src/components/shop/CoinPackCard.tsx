@@ -15,6 +15,17 @@ export function CoinPackCard({ product }: { product: Product }) {
       <p className="mt-2 flex-1 text-xs leading-relaxed text-muted-foreground">
         {product.description}
       </p>
+      {product.amount ? (
+        <div className="mt-4 rounded-xl border border-border/70 bg-surface/40 px-3 py-2">
+          <p className="text-[0.7rem] text-muted-foreground">
+            {formatCoins(product.baseAmount ?? product.amount)} AC
+            {product.bonusAmount ? ` + ${formatCoins(product.bonusAmount)} AC bonus` : ""}
+          </p>
+          <p className="mt-0.5 text-sm font-semibold text-premium">
+            = {formatCoins(product.amount)} AC
+          </p>
+        </div>
+      ) : null}
       <p className="mt-4 text-sm text-muted-foreground">{formatPrice(product)}</p>
       <AddToCartButton product={product} variant="premium" size="sm" className="mt-5 w-full" />
     </article>
