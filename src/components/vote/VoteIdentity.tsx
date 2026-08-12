@@ -113,7 +113,7 @@ export function VoteProfileCard({
         </span>
         <div>
           <p className="text-[0.62rem] uppercase tracking-[0.2em] text-muted-foreground">
-            ✨ Éclats gagnés
+            Éclats gagnés
           </p>
           <p className="font-display text-2xl text-foreground">
             {formatVotes(shards)} <span className="text-sm text-muted-foreground">Éclats</span>
