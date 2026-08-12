@@ -21,7 +21,6 @@ import { Route as VoteRouteImport } from './routes/vote'
 import { Route as AdminTestsRouteImport } from './routes/admin.tests'
 import { Route as BoutiqueIndexRouteImport } from './routes/boutique.index'
 import { Route as BoutiqueProductIdRouteImport } from './routes/boutique.$productId'
-import { Route as ApiPublicPaytestRouteImport } from './routes/api/public/paytest'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
 const IndexRoute = IndexRouteImport.update({
@@ -84,11 +83,6 @@ const BoutiqueProductIdRoute = BoutiqueProductIdRouteImport.update({
   path: '/$productId',
   getParentRoute: () => BoutiqueRoute,
 } as any)
-const ApiPublicPaytestRoute = ApiPublicPaytestRouteImport.update({
-  id: '/api/public/paytest',
-  path: '/api/public/paytest',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiPublicPaymentsWebhookRoute =
   ApiPublicPaymentsWebhookRouteImport.update({
     id: '/api/public/payments/webhook',
@@ -109,7 +103,6 @@ export interface FileRoutesByFullPath {
   '/admin/tests': typeof AdminTestsRoute
   '/boutique/$productId': typeof BoutiqueProductIdRoute
   '/boutique/': typeof BoutiqueIndexRoute
-  '/api/public/paytest': typeof ApiPublicPaytestRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesByTo {
@@ -124,7 +117,6 @@ export interface FileRoutesByTo {
   '/admin/tests': typeof AdminTestsRoute
   '/boutique/$productId': typeof BoutiqueProductIdRoute
   '/boutique': typeof BoutiqueIndexRoute
-  '/api/public/paytest': typeof ApiPublicPaytestRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesById {
@@ -141,7 +133,6 @@ export interface FileRoutesById {
   '/admin/tests': typeof AdminTestsRoute
   '/boutique/$productId': typeof BoutiqueProductIdRoute
   '/boutique/': typeof BoutiqueIndexRoute
-  '/api/public/paytest': typeof ApiPublicPaytestRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRouteTypes {
@@ -159,7 +150,6 @@ export interface FileRouteTypes {
     | '/admin/tests'
     | '/boutique/$productId'
     | '/boutique/'
-    | '/api/public/paytest'
     | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -174,7 +164,6 @@ export interface FileRouteTypes {
     | '/admin/tests'
     | '/boutique/$productId'
     | '/boutique'
-    | '/api/public/paytest'
     | '/api/public/payments/webhook'
   id:
     | '__root__'
@@ -190,7 +179,6 @@ export interface FileRouteTypes {
     | '/admin/tests'
     | '/boutique/$productId'
     | '/boutique/'
-    | '/api/public/paytest'
     | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
 }
@@ -205,7 +193,6 @@ export interface RootRouteChildren {
   ReglementRoute: typeof ReglementRoute
   VoteRoute: typeof VoteRoute
   AdminTestsRoute: typeof AdminTestsRoute
-  ApiPublicPaytestRoute: typeof ApiPublicPaytestRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
@@ -295,13 +282,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BoutiqueProductIdRouteImport
       parentRoute: typeof BoutiqueRoute
     }
-    '/api/public/paytest': {
-      id: '/api/public/paytest'
-      path: '/api/public/paytest'
-      fullPath: '/api/public/paytest'
-      preLoaderRoute: typeof ApiPublicPaytestRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/public/payments/webhook': {
       id: '/api/public/payments/webhook'
       path: '/api/public/payments/webhook'
@@ -337,7 +317,6 @@ const rootRouteChildren: RootRouteChildren = {
   ReglementRoute: ReglementRoute,
   VoteRoute: VoteRoute,
   AdminTestsRoute: AdminTestsRoute,
-  ApiPublicPaytestRoute: ApiPublicPaytestRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
