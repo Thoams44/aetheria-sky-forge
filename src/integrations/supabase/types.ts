@@ -291,10 +291,13 @@ export type Database = {
           minecraft_username: string | null
           mode: Database["public"]["Enums"]["order_mode"]
           order_number: string
+          paid_at: string | null
           payment_provider: string | null
           payment_reference: string | null
           player_id: string | null
           status: Database["public"]["Enums"]["order_status"]
+          stripe_payment_intent_id: string | null
+          stripe_session_id: string | null
           total_amount: number
           updated_at: string
         }
@@ -306,10 +309,13 @@ export type Database = {
           minecraft_username?: string | null
           mode?: Database["public"]["Enums"]["order_mode"]
           order_number?: string
+          paid_at?: string | null
           payment_provider?: string | null
           payment_reference?: string | null
           player_id?: string | null
           status?: Database["public"]["Enums"]["order_status"]
+          stripe_payment_intent_id?: string | null
+          stripe_session_id?: string | null
           total_amount?: number
           updated_at?: string
         }
@@ -321,10 +327,13 @@ export type Database = {
           minecraft_username?: string | null
           mode?: Database["public"]["Enums"]["order_mode"]
           order_number?: string
+          paid_at?: string | null
           payment_provider?: string | null
           payment_reference?: string | null
           player_id?: string | null
           status?: Database["public"]["Enums"]["order_status"]
+          stripe_payment_intent_id?: string | null
+          stripe_session_id?: string | null
           total_amount?: number
           updated_at?: string
         }
