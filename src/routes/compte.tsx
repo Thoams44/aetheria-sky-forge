@@ -131,6 +131,57 @@ function ComptePage() {
           </div>
         </div>
 
+        <div className="aether-surface mt-6 rounded-2xl p-6">
+          <div className="flex flex-wrap items-center gap-2">
+            <Package size={16} className="text-secondary" />
+            <h2 className="text-lg font-semibold text-foreground">
+              Historique des commandes
+            </h2>
+            <Link
+              to="/boutique"
+              className="ml-auto text-xs font-semibold text-muted-foreground transition-colors hover:text-secondary"
+            >
+              Aller à la boutique
+            </Link>
+          </div>
+          <div className="mt-5 overflow-x-auto">
+            <table className="w-full min-w-[34rem] text-left text-sm">
+              <thead>
+                <tr className="text-[0.62rem] uppercase tracking-[0.18em] text-muted-foreground">
+                  <th className="pb-3 font-medium">Commande</th>
+                  <th className="pb-3 font-medium">Date</th>
+                  <th className="pb-3 font-medium">Contenu</th>
+                  <th className="pb-3 font-medium">Statut</th>
+                  <th className="pb-3 font-medium">Livraison</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {demoOrders.map((order) => (
+                  <tr key={order.id}>
+                    <td className="py-3 font-mono text-xs text-foreground">{order.id}</td>
+                    <td className="py-3 text-muted-foreground">{order.date}</td>
+                    <td className="py-3 text-muted-foreground">{order.items.join(", ")}</td>
+                    <td className="py-3 text-muted-foreground">
+                      {orderStatusLabel[order.status]}
+                    </td>
+                    <td className="py-3">
+                      <span
+                        className={`rounded-full px-3 py-1 text-[0.6rem] uppercase tracking-[0.14em] ${
+                          order.delivered
+                            ? "bg-secondary/12 text-secondary"
+                            : "bg-accent/60 text-muted-foreground"
+                        }`}
+                      >
+                        {order.delivered ? "Livrée" : "En attente"}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
         <p className="mt-8 text-xs text-muted-foreground">
           Données de démonstration. Aucune authentification réelle n'est active.
         </p>
