@@ -17,6 +17,7 @@ import { Route as CompteRouteImport } from './routes/compte'
 import { Route as PanierRouteImport } from './routes/panier'
 import { Route as ReglementRouteImport } from './routes/reglement'
 import { Route as VoteRouteImport } from './routes/vote'
+import { Route as AdminTestsRouteImport } from './routes/admin.tests'
 import { Route as BoutiqueIndexRouteImport } from './routes/boutique.index'
 import { Route as BoutiqueProductIdRouteImport } from './routes/boutique.$productId'
 
@@ -60,6 +61,11 @@ const VoteRoute = VoteRouteImport.update({
   path: '/vote',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminTestsRoute = AdminTestsRouteImport.update({
+  id: '/admin/tests',
+  path: '/admin/tests',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BoutiqueIndexRoute = BoutiqueIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/panier': typeof PanierRoute
   '/reglement': typeof ReglementRoute
   '/vote': typeof VoteRoute
+  '/admin/tests': typeof AdminTestsRoute
   '/boutique/$productId': typeof BoutiqueProductIdRoute
   '/boutique/': typeof BoutiqueIndexRoute
 }
@@ -91,6 +98,7 @@ export interface FileRoutesByTo {
   '/panier': typeof PanierRoute
   '/reglement': typeof ReglementRoute
   '/vote': typeof VoteRoute
+  '/admin/tests': typeof AdminTestsRoute
   '/boutique/$productId': typeof BoutiqueProductIdRoute
   '/boutique': typeof BoutiqueIndexRoute
 }
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/panier': typeof PanierRoute
   '/reglement': typeof ReglementRoute
   '/vote': typeof VoteRoute
+  '/admin/tests': typeof AdminTestsRoute
   '/boutique/$productId': typeof BoutiqueProductIdRoute
   '/boutique/': typeof BoutiqueIndexRoute
 }
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
     | '/panier'
     | '/reglement'
     | '/vote'
+    | '/admin/tests'
     | '/boutique/$productId'
     | '/boutique/'
   fileRoutesByTo: FileRoutesByTo
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
     | '/panier'
     | '/reglement'
     | '/vote'
+    | '/admin/tests'
     | '/boutique/$productId'
     | '/boutique'
   id:
@@ -141,6 +152,7 @@ export interface FileRouteTypes {
     | '/panier'
     | '/reglement'
     | '/vote'
+    | '/admin/tests'
     | '/boutique/$productId'
     | '/boutique/'
   fileRoutesById: FileRoutesById
@@ -154,6 +166,7 @@ export interface RootRouteChildren {
   PanierRoute: typeof PanierRoute
   ReglementRoute: typeof ReglementRoute
   VoteRoute: typeof VoteRoute
+  AdminTestsRoute: typeof AdminTestsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -214,6 +227,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VoteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/tests': {
+      id: '/admin/tests'
+      path: '/admin/tests'
+      fullPath: '/admin/tests'
+      preLoaderRoute: typeof AdminTestsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/boutique/': {
       id: '/boutique/'
       path: '/'
@@ -254,6 +274,7 @@ const rootRouteChildren: RootRouteChildren = {
   PanierRoute: PanierRoute,
   ReglementRoute: ReglementRoute,
   VoteRoute: VoteRoute,
+  AdminTestsRoute: AdminTestsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
