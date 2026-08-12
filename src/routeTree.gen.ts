@@ -19,6 +19,7 @@ import { Route as ReglementRouteImport } from './routes/reglement'
 import { Route as VoteRouteImport } from './routes/vote'
 import { Route as BoutiqueIndexRouteImport } from './routes/boutique.index'
 import { Route as BoutiqueProductIdRouteImport } from './routes/boutique.$productId'
+import { Route as ApiPublicAccttestRouteImport } from './routes/api.public.accttest'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -70,6 +71,11 @@ const BoutiqueProductIdRoute = BoutiqueProductIdRouteImport.update({
   path: '/$productId',
   getParentRoute: () => BoutiqueRoute,
 } as any)
+const ApiPublicAccttestRoute = ApiPublicAccttestRouteImport.update({
+  id: '/api/public/accttest',
+  path: '/api/public/accttest',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -82,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/vote': typeof VoteRoute
   '/boutique/$productId': typeof BoutiqueProductIdRoute
   '/boutique/': typeof BoutiqueIndexRoute
+  '/api/public/accttest': typeof ApiPublicAccttestRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -93,6 +100,7 @@ export interface FileRoutesByTo {
   '/vote': typeof VoteRoute
   '/boutique/$productId': typeof BoutiqueProductIdRoute
   '/boutique': typeof BoutiqueIndexRoute
+  '/api/public/accttest': typeof ApiPublicAccttestRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -106,6 +114,7 @@ export interface FileRoutesById {
   '/vote': typeof VoteRoute
   '/boutique/$productId': typeof BoutiqueProductIdRoute
   '/boutique/': typeof BoutiqueIndexRoute
+  '/api/public/accttest': typeof ApiPublicAccttestRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -120,6 +129,7 @@ export interface FileRouteTypes {
     | '/vote'
     | '/boutique/$productId'
     | '/boutique/'
+    | '/api/public/accttest'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -131,6 +141,7 @@ export interface FileRouteTypes {
     | '/vote'
     | '/boutique/$productId'
     | '/boutique'
+    | '/api/public/accttest'
   id:
     | '__root__'
     | '/'
@@ -143,6 +154,7 @@ export interface FileRouteTypes {
     | '/vote'
     | '/boutique/$productId'
     | '/boutique/'
+    | '/api/public/accttest'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -154,6 +166,7 @@ export interface RootRouteChildren {
   PanierRoute: typeof PanierRoute
   ReglementRoute: typeof ReglementRoute
   VoteRoute: typeof VoteRoute
+  ApiPublicAccttestRoute: typeof ApiPublicAccttestRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -228,6 +241,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BoutiqueProductIdRouteImport
       parentRoute: typeof BoutiqueRoute
     }
+    '/api/public/accttest': {
+      id: '/api/public/accttest'
+      path: '/api/public/accttest'
+      fullPath: '/api/public/accttest'
+      preLoaderRoute: typeof ApiPublicAccttestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -254,7 +274,18 @@ const rootRouteChildren: RootRouteChildren = {
   PanierRoute: PanierRoute,
   ReglementRoute: ReglementRoute,
   VoteRoute: VoteRoute,
+  ApiPublicAccttestRoute: ApiPublicAccttestRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
