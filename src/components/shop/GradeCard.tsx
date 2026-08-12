@@ -52,6 +52,11 @@ export function GradeCard({ product }: { product: Product }) {
             {a}
           </li>
         ))}
+        {product.advantages.length > 3 && (
+          <li className="text-xs text-muted-foreground/80">
+            + {product.advantages.length - 3} autres avantages cumulés
+          </li>
+        )}
       </ul>
 
       <div className="mt-7 grid gap-2.5">
