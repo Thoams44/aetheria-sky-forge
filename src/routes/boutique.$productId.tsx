@@ -70,8 +70,8 @@ function ProductPage() {
               Avantages
             </h3>
             <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-              {(product.advantages.length ? product.advantages : ["Contenu à définir"]).map<string, JSX.Element>(
-                (a, i) => (
+              {(product.advantages.length ? product.advantages : ["Contenu à définir"]).map(
+                (a: string, i: number) => (
                   <li
                     key={`${product.id}-detail-${i}`}
                     className="flex items-start gap-3 rounded-xl border border-border p-4 text-sm text-muted-foreground"
