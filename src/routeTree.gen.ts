@@ -15,6 +15,8 @@ import { Route as ClassementsRouteImport } from './routes/classements'
 import { Route as CompteRouteImport } from './routes/compte'
 import { Route as ReglementRouteImport } from './routes/reglement'
 import { Route as VoteRouteImport } from './routes/vote'
+import { Route as BoutiqueIndexRouteImport } from './routes/boutique.index'
+import { Route as BoutiqueProductIdRouteImport } from './routes/boutique.$productId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -46,38 +48,67 @@ const VoteRoute = VoteRouteImport.update({
   path: '/vote',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BoutiqueIndexRoute = BoutiqueIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BoutiqueRoute,
+} as any)
+const BoutiqueProductIdRoute = BoutiqueProductIdRouteImport.update({
+  id: '/$productId',
+  path: '/$productId',
+  getParentRoute: () => BoutiqueRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/boutique': typeof BoutiqueRoute
+  '/boutique': typeof BoutiqueRouteWithChildren
   '/classements': typeof ClassementsRoute
   '/compte': typeof CompteRoute
   '/reglement': typeof ReglementRoute
   '/vote': typeof VoteRoute
+  '/boutique/$productId': typeof BoutiqueProductIdRoute
+  '/boutique/': typeof BoutiqueIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/boutique': typeof BoutiqueRoute
   '/classements': typeof ClassementsRoute
   '/compte': typeof CompteRoute
   '/reglement': typeof ReglementRoute
   '/vote': typeof VoteRoute
+  '/boutique/$productId': typeof BoutiqueProductIdRoute
+  '/boutique': typeof BoutiqueIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/boutique': typeof BoutiqueRoute
+  '/boutique': typeof BoutiqueRouteWithChildren
   '/classements': typeof ClassementsRoute
   '/compte': typeof CompteRoute
   '/reglement': typeof ReglementRoute
   '/vote': typeof VoteRoute
+  '/boutique/$productId': typeof BoutiqueProductIdRoute
+  '/boutique/': typeof BoutiqueIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/boutique' | '/classements' | '/compte' | '/reglement' | '/vote'
+    | '/'
+    | '/boutique'
+    | '/classements'
+    | '/compte'
+    | '/reglement'
+    | '/vote'
+    | '/boutique/$productId'
+    | '/boutique/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/boutique' | '/classements' | '/compte' | '/reglement' | '/vote'
+  to:
+    | '/'
+    | '/classements'
+    | '/compte'
+    | '/reglement'
+    | '/vote'
+    | '/boutique/$productId'
+    | '/boutique'
   id:
     | '__root__'
     | '/'
@@ -86,11 +117,13 @@ export interface FileRouteTypes {
     | '/compte'
     | '/reglement'
     | '/vote'
+    | '/boutique/$productId'
+    | '/boutique/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  BoutiqueRoute: typeof BoutiqueRoute
+  BoutiqueRoute: typeof BoutiqueRouteWithChildren
   ClassementsRoute: typeof ClassementsRoute
   CompteRoute: typeof CompteRoute
   ReglementRoute: typeof ReglementRoute
@@ -141,12 +174,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VoteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/boutique/': {
+      id: '/boutique/'
+      path: '/'
+      fullPath: '/boutique/'
+      preLoaderRoute: typeof BoutiqueIndexRouteImport
+      parentRoute: typeof BoutiqueRoute
+    }
+    '/boutique/$productId': {
+      id: '/boutique/$productId'
+      path: '/$productId'
+      fullPath: '/boutique/$productId'
+      preLoaderRoute: typeof BoutiqueProductIdRouteImport
+      parentRoute: typeof BoutiqueRoute
+    }
   }
 }
 
+interface BoutiqueRouteChildren {
+  BoutiqueProductIdRoute: typeof BoutiqueProductIdRoute
+  BoutiqueIndexRoute: typeof BoutiqueIndexRoute
+}
+
+const BoutiqueRouteChildren: BoutiqueRouteChildren = {
+  BoutiqueProductIdRoute: BoutiqueProductIdRoute,
+  BoutiqueIndexRoute: BoutiqueIndexRoute,
+}
+
+const BoutiqueRouteWithChildren = BoutiqueRoute._addFileChildren(
+  BoutiqueRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  BoutiqueRoute: BoutiqueRoute,
+  BoutiqueRoute: BoutiqueRouteWithChildren,
   ClassementsRoute: ClassementsRoute,
   CompteRoute: CompteRoute,
   ReglementRoute: ReglementRoute,
