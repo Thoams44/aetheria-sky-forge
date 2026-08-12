@@ -40,7 +40,7 @@ const DELIVERY_TYPE: Record<string, string> = {
 };
 
 export const Route = createFileRoute("/paiement")({
-  validateSearch: (search: Record<string, unknown>): { session_id?: string } => ({
+  validateSearch: (search: Record<string, unknown>): { session_id?: string | undefined } => ({
     session_id: typeof search["session_id"] === "string" ? search["session_id"] : undefined,
   }),
   head: () => ({

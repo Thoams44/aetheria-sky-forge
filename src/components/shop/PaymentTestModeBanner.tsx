@@ -1,6 +1,6 @@
 import { FlaskConical, ShieldAlert } from "lucide-react";
 
-const clientToken = import.meta.env.VITE_PAYMENTS_CLIENT_TOKEN;
+const clientToken = import.meta.env['VITE_PAYMENTS_CLIENT_TOKEN'];
 
 /** Bandeau discret : indique l'environnement de paiement, dans l'habillage AetheriaSky. */
 export function PaymentTestModeBanner() {
