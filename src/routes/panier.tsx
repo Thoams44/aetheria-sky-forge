@@ -3,7 +3,7 @@ import { Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageShell";
 import { Section } from "@/components/aether/Section";
 import { ProductIcon } from "@/components/shop/ProductIcon";
-import { formatPrice } from "@/data/products";
+import { formatAmount, formatPrice } from "@/data/products";
 import { useCart } from "@/lib/cart";
 
 const title = "Mon panier — Boutique AetheriaSky";
@@ -24,8 +24,8 @@ export const Route = createFileRoute("/panier")({
 });
 
 function PanierPage() {
-  const { detailed, count, remove, setQuantity, clear } = useCart();
-  const hasPrices = detailed.some((d) => d.product.price !== null);
+  const { detailed, count, remove, setQuantity, clear, subtotal, total, currency, catalogLoading } =
+    useCart();
 
   return (
     <>
@@ -36,6 +36,11 @@ function PanierPage() {
       />
       <Section>
         {detailed.length === 0 ? (
+          catalogLoading ? (
+            <p className="aether-surface rounded-3xl px-6 py-16 text-center text-sm text-muted-foreground">
+              Chargement de ton panier…
+            </p>
+          ) : (
           <div className="aether-surface flex flex-col items-center rounded-3xl px-6 py-16 text-center">
             <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-accent/50 text-muted-foreground">
               <ShoppingCart size={22} />
@@ -54,6 +59,7 @@ function PanierPage() {
               Aller à la boutique
             </Link>
           </div>
+          )
         ) : (
           <div className="grid gap-5 lg:grid-cols-[1.6fr_1fr]">
             <div className="aether-surface rounded-3xl p-6 sm:p-7">
@@ -142,13 +148,13 @@ function PanierPage() {
                 <div className="flex justify-between text-muted-foreground">
                   <dt>Sous-total</dt>
                   <dd className="text-foreground">
-                    {hasPrices ? "—" : "Prix à définir"}
+                    {subtotal === null ? "Prix à définir" : formatAmount(subtotal, currency)}
                   </dd>
                 </div>
                 <div className="flex justify-between border-t border-border pt-3 text-muted-foreground">
                   <dt className="font-semibold text-foreground">Total</dt>
                   <dd className="font-display text-lg text-foreground">
-                    Prix à définir
+                    {total === null ? "Prix à définir" : formatAmount(total, currency)}
                   </dd>
                 </div>
               </dl>
