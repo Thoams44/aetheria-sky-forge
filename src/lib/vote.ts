@@ -6,7 +6,7 @@ export type TierState = "unlocked" | "next" | "locked";
 export type AnyTier = VoteTier | VoteTierDTO;
 
 export type VoteTierProgress = {
-  tier: { votes: number; coins: number; bonus?: string | null };
+  tier: { votes: number; coins: number; bonus?: string | null; reward?: string };
   state: TierState;
   /** Votes restants avant déblocage (0 si déjà débloqué). */
   remaining: number;
@@ -25,7 +25,12 @@ export function getTierProgress(
   return tiers.map((tier) => {
     const unlocked = votes >= tier.votes;
     return {
-      tier: { votes: tier.votes, coins: tier.coins, bonus: tier.bonus ?? null },
+      tier: {
+        votes: tier.votes,
+        coins: tier.coins,
+        bonus: tier.bonus ?? null,
+        ...("reward" in tier ? { reward: tier.reward } : {}),
+      },
       state: unlocked ? "unlocked" : tier === nextTier ? "next" : "locked",
       remaining: unlocked ? 0 : tier.votes - votes,
       percent: Math.min(100, Math.round((votes / tier.votes) * 100)),

@@ -13,6 +13,7 @@ import {
   getVotePageData,
   getVoteProfile,
   type VoteProfileDTO,
+  type VotePlatformDTO,
 } from "@/lib/backend/vote.functions";
 import { getNextTier } from "@/lib/vote";
 
@@ -117,7 +118,7 @@ function VotePage() {
           </p>
         ) : (
           <div className="mt-10 grid gap-5 sm:grid-cols-2">
-            {platforms.map((platform) => (
+            {platforms.map((platform: VotePlatformDTO) => (
               <VotePlatformCard
                 key={platform.id}
                 platform={platform}
