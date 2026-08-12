@@ -1,139 +1,68 @@
 /**
- * Espace joueur AetheriaSky — données de démonstration.
- *
- * Architecture prévue (aucune connexion réelle ici) :
- *   Site → Backend AetheriaSky → API → AetheriaCore → Serveur Minecraft
- *
- * Le backend devra fournir : UUID, pseudo, grade + permissions, Aether Coins,
- * Éclats, votes, statistiques joueur/île, achats et récompenses.
+ * Espace joueur AetheriaSky — libellés et helpers de présentation.
+ * Toutes les valeurs affichées proviennent désormais du backend.
  */
 
-export type GradeId = "VIP" | "MVP" | "ELITE" | "ULTIME";
+export type OrderStatusKey =
+  | "PENDING"
+  | "PAID"
+  | "PROCESSING"
+  | "DELIVERED"
+  | "FAILED"
+  | "REFUNDED"
+  | "CANCELLED";
 
-export type AccountGrade = {
-  id: GradeId;
-  /** Actif / expiré — renvoyé par le backend. */
-  active: boolean;
-  obtainedAt: string;
-  /** null = grade permanent. */
-  expiresAt: string | null;
+export const orderStatusLabel: Record<string, string> = {
+  PENDING: "En attente",
+  PAID: "Payée",
+  PROCESSING: "En traitement",
+  DELIVERED: "Livrée",
+  FAILED: "Échec",
+  REFUNDED: "Remboursée",
+  CANCELLED: "Annulée",
 };
 
-export type AccountStat = {
-  key:
-    | "level"
-    | "playtime"
-    | "islandLevel"
-    | "islandValue"
-    | "playerRank"
-    | "islandRank"
-    | "votes";
-  label: string;
-  value: string;
+export const orderStatusTone: Record<string, string> = {
+  PENDING: "border-premium/40 bg-premium/10 text-premium",
+  PAID: "border-secondary/40 bg-secondary/10 text-secondary",
+  PROCESSING: "border-info/40 bg-info/10 text-info",
+  DELIVERED: "border-success/40 bg-success/10 text-success",
+  FAILED: "border-destructive/40 bg-destructive/10 text-destructive",
+  REFUNDED: "border-border bg-accent/50 text-muted-foreground",
+  CANCELLED: "border-destructive/40 bg-destructive/10 text-destructive",
 };
 
-export type RewardStatus = "available" | "claimed" | "expired";
-
-export type AccountReward = {
-  id: string;
-  label: string;
-  source: "vote" | "event" | "special";
-  status: RewardStatus;
-  detail: string;
+/** Statuts de livraison (table `deliveries`). */
+export const deliveryStatusLabel: Record<string, string> = {
+  PENDING: "En attente",
+  PROCESSING: "En cours",
+  DELIVERED: "Livrée",
+  FAILED: "Échec",
 };
 
-export type AccountSecurity = {
-  verified: boolean;
-  lastLogin: string | null;
-  activeSessions: number | null;
+export const deliveryStatusTone: Record<string, string> = {
+  PENDING: "border-secondary/40 bg-secondary/10 text-secondary",
+  PROCESSING: "border-info/40 bg-info/10 text-info",
+  DELIVERED: "border-success/40 bg-success/10 text-success",
+  FAILED: "border-destructive/40 bg-destructive/10 text-destructive",
 };
 
-export type Account = {
-  username: string;
-  uuid: string;
-  grade: AccountGrade;
-  /** Monnaie premium (boutique) — distincte des Éclats. */
-  aetherCoins: number;
-  /** Monnaie gratuite obtenue via les votes — distincte des Aether Coins. */
-  shards: number;
-  monthlyVotes: number;
-  totalVotes: number;
-  stats: AccountStat[];
-  rewards: AccountReward[];
-  security: AccountSecurity;
-};
-
-export const demoAccount: Account = {
-  username: "Thomas",
-  uuid: "8f2c14a0-7b3d-4e91-9c55-1ad4f0b7e2c3",
-  grade: {
-    id: "ELITE",
-    active: true,
-    obtainedAt: "2 mars 2026",
-    expiresAt: null,
-  },
-  aetherCoins: 2500,
-  shards: 1250,
-  monthlyVotes: 37,
-  totalVotes: 128,
-  stats: [
-    { key: "level", label: "Niveau", value: "87" },
-    { key: "playtime", label: "Temps de jeu", value: "312 h" },
-    { key: "islandLevel", label: "Niveau de l'île", value: "42" },
-    { key: "islandValue", label: "Valeur de l'île", value: "412 950 pts" },
-    { key: "playerRank", label: "Classement joueur", value: "#127" },
-    { key: "islandRank", label: "Classement île", value: "#94" },
-    { key: "votes", label: "Nombre de votes", value: "128" },
-  ],
-  rewards: [
-    {
-      id: "rw-1",
-      label: "Récompense de vote",
-      source: "vote",
-      status: "available",
-      detail: "Palier de vote atteint — Éclats à définir",
-    },
-    {
-      id: "rw-2",
-      label: "Récompense de vote",
-      source: "vote",
-      status: "claimed",
-      detail: "Palier précédent — Éclats à définir",
-    },
-    {
-      id: "rw-3",
-      label: "Récompense d'événement",
-      source: "event",
-      status: "available",
-      detail: "Événement saisonnier — récompense à définir",
-    },
-    {
-      id: "rw-4",
-      label: "Récompense spéciale",
-      source: "special",
-      status: "expired",
-      detail: "Offre limitée — période terminée",
-    },
-  ],
-  security: {
-    verified: false,
-    lastLogin: null,
-    activeSessions: null,
-  },
-};
-
-export const rewardStatusLabel: Record<RewardStatus, string> = {
-  available: "Disponible",
-  claimed: "Récupérée",
-  expired: "Expirée",
-};
-
-export const rewardStatusTone: Record<RewardStatus, string> = {
-  available: "border-secondary/40 bg-secondary/10 text-secondary",
-  claimed: "border-success/40 bg-success/10 text-success",
-  expired: "border-border bg-accent/50 text-muted-foreground",
-};
+export const SOON = "Disponible prochainement";
 
 export function formatAmount(n: number): string {
   return n.toLocaleString("fr-FR");
+}
+
+export function formatDate(iso: string | null | undefined): string {
+  if (!iso) return "—";
+  return new Date(iso).toLocaleDateString("fr-FR", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+export function formatPrice(amount: number | null, currency: string): string {
+  if (amount == null) return "Prix à définir";
+  return `${amount.toLocaleString("fr-FR", { minimumFractionDigits: 2 })} ${currency === "EUR" ? "€" : currency}`;
 }
