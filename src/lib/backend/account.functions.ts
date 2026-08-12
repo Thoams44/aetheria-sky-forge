@@ -1,53 +1,25 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { AccountDTO } from "./account.server";
 
 /** Lectures privées de l'espace joueur (RLS : chaque joueur ne voit que ses données). */
 
-export const getMyPlayer = createServerFn({ method: "GET" })
+export const getMyAccount = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .handler(async ({ context }) => {
-    const { data, error } = await context.supabase
-      .from("players")
-      .select(
-        "id, minecraft_uuid, minecraft_username, verified, grade_id, grade_obtained_at, grade_expires_at, aether_coins_balance, shards_balance, last_seen_at, created_at",
-      )
-      .eq("user_id", context.userId)
-      .maybeSingle();
-    if (error) throw new Error(error.message);
-    return data;
+  .handler(async ({ context }): Promise<AccountDTO> => {
+    const { loadAccount } = await import("./account.server");
+    return loadAccount(context.supabase, context.userId);
   });
 
-export const getMyCurrencyTransactions = createServerFn({ method: "GET" })
+export const linkMinecraftUsername = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .handler(async ({ context }) => {
-    const { data, error } = await context.supabase
-      .from("currency_transactions")
-      .select("id, currency_type, amount, type, reason, reference_id, created_at")
-      .order("created_at", { ascending: false })
-      .limit(50);
-    if (error) throw new Error(error.message);
-    return data ?? [];
-  });
-
-export const getMyVotes = createServerFn({ method: "GET" })
-  .middleware([requireSupabaseAuth])
-  .handler(async ({ context }) => {
-    const { data, error } = await context.supabase
-      .from("votes")
-      .select("id, platform_id, voted_at, validated_at, status, reward_claimed")
-      .order("voted_at", { ascending: false })
-      .limit(50);
-    if (error) throw new Error(error.message);
-    return data ?? [];
-  });
-
-export const getMyOrders = createServerFn({ method: "GET" })
-  .middleware([requireSupabaseAuth])
-  .handler(async ({ context }) => {
-    const { data, error } = await context.supabase
-      .from("orders")
-      .select("id, order_number, total_amount, currency, status, mode, created_at, order_items(id, product_id, quantity, unit_price, total_price)")
-      .order("created_at", { ascending: false });
-    if (error) throw new Error(error.message);
-    return data ?? [];
+  .inputValidator((input: { username: string }) => ({
+    username: String(input?.username ?? "").trim().slice(0, 16),
+  }))
+  .handler(async ({ data, context }) => {
+    if (!/^[A-Za-z0-9_]{3,16}$/.test(data.username)) {
+      return { ok: false as const, message: "Pseudo Minecraft invalide (3 à 16 caractères)." };
+    }
+    const { linkPlayer } = await import("./account.server");
+    return linkPlayer(context.userId, data.username);
   });
