@@ -146,7 +146,7 @@ async function buildProfile(
   ]);
 
   const allVotes = votes ?? [];
-  const platformMap = new Map((platforms ?? []).map((p: any) => [p.id, p]));
+  const platformMap = new Map<string, any>((platforms ?? []).map((p: any) => [p.id, p]));
   const validated = allVotes.filter(isValidated);
 
   const monthStart = new Date();

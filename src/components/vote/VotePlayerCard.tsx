@@ -17,7 +17,7 @@ export function VotePlayerCard({
   rank: number | null;
   pendingVoteKeys: number;
   coinsFromTiers: number;
-  onChange?: () => void;
+  onChange?: (() => void) | undefined;
 }) {
   return (
     <div className="aether-surface aether-glow rounded-2xl p-6 sm:p-8">

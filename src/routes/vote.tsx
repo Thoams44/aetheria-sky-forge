@@ -128,7 +128,7 @@ function VotePage() {
 
   const votes = profile?.found ? profile.totalVotes : 0;
   const tiers = profile?.found && profile.tiers.length > 0 ? profile.tiers : publicTiers;
-  const nextTier = tiers.find((t) => votes < t.votes) ?? null;
+  const nextTier = tiers.find((t: VoteTierDTO) => votes < t.votes) ?? null;
 
   return (
     <>
