@@ -1,5 +1,6 @@
 import heroImage from "@/assets/hero-islands.jpg";
 import { IpCopy } from "@/components/aether/IpCopy";
+import { ServerStatusLine } from "@/components/aether/ServerStatusLine";
 import { DiscordIcon } from "@/components/brand/DiscordIcon";
 import { siteConfig } from "@/config/site";
 
@@ -57,7 +58,10 @@ export function Hero() {
         </p>
 
         <div className="rise-in mt-9 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-          <IpCopy />
+          <div className="flex flex-col items-start gap-2">
+            <IpCopy />
+            <ServerStatusLine className="pl-1" />
+          </div>
           <a
             href={siteConfig.discordUrl}
             target="_blank"
