@@ -59,7 +59,6 @@ export type TestTimelineEntryDTO = {
   action: string;
   createdAt: string;
   actorEmail: string | null;
-  metadata: Record<string, unknown>;
 };
 
 export type TestDashboardDTO = {
@@ -283,7 +282,7 @@ export async function loadDashboard(): Promise<TestDashboardDTO> {
 export async function loadTimeline(orderId: string): Promise<TestTimelineEntryDTO[]> {
   const { data, error } = await supabaseAdmin
     .from("audit_logs")
-    .select("action, created_at, actor_id, metadata")
+    .select("action, created_at, actor_id")
     .eq("target_id", orderId)
     .order("created_at", { ascending: true });
   if (error) throw new Error(error.message);
@@ -292,7 +291,6 @@ export async function loadTimeline(orderId: string): Promise<TestTimelineEntryDT
     action: l.action,
     createdAt: l.created_at,
     actorEmail: l.actor_id ? (emails.get(l.actor_id) ?? null) : null,
-    metadata: (l.metadata ?? {}) as Record<string, unknown>,
   }));
 }
 
