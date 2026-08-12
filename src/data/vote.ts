@@ -30,7 +30,7 @@ export type VotePlatform = {
   enabled: boolean;
   /** Délai avant un nouveau vote, en heures. */
   cooldownHours: number;
-  /** Récompense en Éclats — quantité à définir. */
+  /** Récompense d'un vote individuel : 1 Clé de Vote en jeu. */
   reward: string;
   order: number;
 };
@@ -80,7 +80,7 @@ export const votePlatforms: VotePlatform[] = [
     voteUrl: null,
     enabled: false,
     cooldownHours: 24,
-    reward: "Récompense à définir",
+    reward: "+1 Clé de Vote",
     order: 1,
   },
   {
@@ -92,7 +92,7 @@ export const votePlatforms: VotePlatform[] = [
     voteUrl: null,
     enabled: false,
     cooldownHours: 24,
-    reward: "Récompense à définir",
+    reward: "+1 Clé de Vote",
     order: 2,
   },
   {
@@ -104,7 +104,7 @@ export const votePlatforms: VotePlatform[] = [
     voteUrl: null,
     enabled: false,
     cooldownHours: 12,
-    reward: "Récompense à définir",
+    reward: "+1 Clé de Vote",
     order: 3,
   },
   {
@@ -116,7 +116,7 @@ export const votePlatforms: VotePlatform[] = [
     voteUrl: null,
     enabled: false,
     cooldownHours: 24,
-    reward: "Récompense à définir",
+    reward: "+1 Clé de Vote",
     order: 4,
   },
 ];
@@ -176,7 +176,7 @@ export const demoVoteProfile: VoteProfile = {
       platformName: "Plateforme de vote #1",
       date: "Aujourd'hui",
       status: "confirmed",
-      reward: "Éclats — à définir",
+      reward: "+1 Clé de Vote",
     },
     {
       id: "vh-2",
@@ -192,7 +192,7 @@ export const demoVoteProfile: VoteProfile = {
       platformName: "Plateforme de vote #2",
       date: "Hier",
       status: "confirmed",
-      reward: "Éclats — à définir",
+      reward: "+1 Clé de Vote",
     },
     {
       id: "vh-4",
