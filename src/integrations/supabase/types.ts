@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      audit_logs: {
+        Row: {
+          action: string
+          actor_id: string | null
+          created_at: string
+          id: string
+          metadata: Json
+          target_id: string | null
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          created_at?: string
+          id?: string
+          metadata?: Json
+          target_id?: string | null
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          created_at?: string
+          id?: string
+          metadata?: Json
+          target_id?: string | null
+        }
+        Relationships: []
+      }
       currency_transactions: {
         Row: {
           amount: number
@@ -48,6 +75,66 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "currency_transactions_player_id_fkey"
+            columns: ["player_id"]
+            isOneToOne: false
+            referencedRelation: "players"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      deliveries: {
+        Row: {
+          attempts: number
+          created_at: string
+          delivered_at: string | null
+          delivery_type: Database["public"]["Enums"]["delivery_type"]
+          id: string
+          last_error: string | null
+          next_attempt_at: string | null
+          order_id: string | null
+          payload: Json
+          player_id: string | null
+          status: Database["public"]["Enums"]["delivery_status"]
+          updated_at: string
+        }
+        Insert: {
+          attempts?: number
+          created_at?: string
+          delivered_at?: string | null
+          delivery_type: Database["public"]["Enums"]["delivery_type"]
+          id?: string
+          last_error?: string | null
+          next_attempt_at?: string | null
+          order_id?: string | null
+          payload?: Json
+          player_id?: string | null
+          status?: Database["public"]["Enums"]["delivery_status"]
+          updated_at?: string
+        }
+        Update: {
+          attempts?: number
+          created_at?: string
+          delivered_at?: string | null
+          delivery_type?: Database["public"]["Enums"]["delivery_type"]
+          id?: string
+          last_error?: string | null
+          next_attempt_at?: string | null
+          order_id?: string | null
+          payload?: Json
+          player_id?: string | null
+          status?: Database["public"]["Enums"]["delivery_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deliveries_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deliveries_player_id_fkey"
             columns: ["player_id"]
             isOneToOne: false
             referencedRelation: "players"
@@ -102,6 +189,154 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      leaderboard_entries: {
+        Row: {
+          captured_at: string
+          category: Database["public"]["Enums"]["leaderboard_category"]
+          display_name: string
+          id: string
+          metadata: Json
+          period: Database["public"]["Enums"]["leaderboard_period"]
+          player_id: string | null
+          rank: number
+          score: number
+          secondary_label: string | null
+        }
+        Insert: {
+          captured_at?: string
+          category: Database["public"]["Enums"]["leaderboard_category"]
+          display_name: string
+          id?: string
+          metadata?: Json
+          period?: Database["public"]["Enums"]["leaderboard_period"]
+          player_id?: string | null
+          rank: number
+          score?: number
+          secondary_label?: string | null
+        }
+        Update: {
+          captured_at?: string
+          category?: Database["public"]["Enums"]["leaderboard_category"]
+          display_name?: string
+          id?: string
+          metadata?: Json
+          period?: Database["public"]["Enums"]["leaderboard_period"]
+          player_id?: string | null
+          rank?: number
+          score?: number
+          secondary_label?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "leaderboard_entries_player_id_fkey"
+            columns: ["player_id"]
+            isOneToOne: false
+            referencedRelation: "players"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      order_items: {
+        Row: {
+          created_at: string
+          id: string
+          order_id: string
+          product_id: string | null
+          quantity: number
+          total_price: number | null
+          unit_price: number | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          order_id: string
+          product_id?: string | null
+          quantity?: number
+          total_price?: number | null
+          unit_price?: number | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          order_id?: string
+          product_id?: string | null
+          quantity?: number
+          total_price?: number | null
+          unit_price?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "store_products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          created_at: string
+          currency: string
+          customer_email: string | null
+          id: string
+          minecraft_username: string | null
+          mode: Database["public"]["Enums"]["order_mode"]
+          order_number: string
+          payment_provider: string | null
+          payment_reference: string | null
+          player_id: string | null
+          status: Database["public"]["Enums"]["order_status"]
+          total_amount: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          currency?: string
+          customer_email?: string | null
+          id?: string
+          minecraft_username?: string | null
+          mode?: Database["public"]["Enums"]["order_mode"]
+          order_number?: string
+          payment_provider?: string | null
+          payment_reference?: string | null
+          player_id?: string | null
+          status?: Database["public"]["Enums"]["order_status"]
+          total_amount?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          customer_email?: string | null
+          id?: string
+          minecraft_username?: string | null
+          mode?: Database["public"]["Enums"]["order_mode"]
+          order_number?: string
+          payment_provider?: string | null
+          payment_reference?: string | null
+          player_id?: string | null
+          status?: Database["public"]["Enums"]["order_status"]
+          total_amount?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_player_id_fkey"
+            columns: ["player_id"]
+            isOneToOne: false
+            referencedRelation: "players"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       player_milestone_claims: {
         Row: {
@@ -191,6 +426,62 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "players_grade_id_fkey"
+            columns: ["grade_id"]
+            isOneToOne: false
+            referencedRelation: "grades"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      store_products: {
+        Row: {
+          active: boolean
+          created_at: string
+          currency: string
+          description: string | null
+          display_order: number
+          grade_id: string | null
+          id: string
+          name: string
+          price: number | null
+          quantity: number | null
+          slug: string
+          type: Database["public"]["Enums"]["product_type"]
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          currency?: string
+          description?: string | null
+          display_order?: number
+          grade_id?: string | null
+          id?: string
+          name: string
+          price?: number | null
+          quantity?: number | null
+          slug: string
+          type: Database["public"]["Enums"]["product_type"]
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          currency?: string
+          description?: string | null
+          display_order?: number
+          grade_id?: string | null
+          id?: string
+          name?: string
+          price?: number | null
+          quantity?: number | null
+          slug?: string
+          type?: Database["public"]["Enums"]["product_type"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "store_products_grade_id_fkey"
             columns: ["grade_id"]
             isOneToOne: false
             referencedRelation: "grades"
@@ -361,6 +652,20 @@ export type Database = {
     Enums: {
       app_role: "player" | "staff" | "admin" | "founder"
       currency_type: "AETHER_COINS" | "SHARDS"
+      delivery_status: "PENDING" | "PROCESSING" | "DELIVERED" | "FAILED"
+      delivery_type: "GRADE" | "AETHER_COINS" | "SHARDS" | "VOTE_KEY" | "CUSTOM"
+      leaderboard_category: "PLAYERS" | "ISLANDS" | "VOTERS"
+      leaderboard_period: "DAY" | "WEEK" | "MONTH" | "ALL_TIME"
+      order_mode: "REAL" | "TEST"
+      order_status:
+        | "PENDING"
+        | "PAID"
+        | "PROCESSING"
+        | "DELIVERED"
+        | "FAILED"
+        | "REFUNDED"
+        | "CANCELLED"
+      product_type: "GRADE" | "AETHER_COINS"
       transaction_type: "CREDIT" | "DEBIT"
       vote_status: "PENDING" | "VALIDATED" | "REWARDED" | "REJECTED"
     }
@@ -492,6 +797,21 @@ export const Constants = {
     Enums: {
       app_role: ["player", "staff", "admin", "founder"],
       currency_type: ["AETHER_COINS", "SHARDS"],
+      delivery_status: ["PENDING", "PROCESSING", "DELIVERED", "FAILED"],
+      delivery_type: ["GRADE", "AETHER_COINS", "SHARDS", "VOTE_KEY", "CUSTOM"],
+      leaderboard_category: ["PLAYERS", "ISLANDS", "VOTERS"],
+      leaderboard_period: ["DAY", "WEEK", "MONTH", "ALL_TIME"],
+      order_mode: ["REAL", "TEST"],
+      order_status: [
+        "PENDING",
+        "PAID",
+        "PROCESSING",
+        "DELIVERED",
+        "FAILED",
+        "REFUNDED",
+        "CANCELLED",
+      ],
+      product_type: ["GRADE", "AETHER_COINS"],
       transaction_type: ["CREDIT", "DEBIT"],
       vote_status: ["PENDING", "VALIDATED", "REWARDED", "REJECTED"],
     },
