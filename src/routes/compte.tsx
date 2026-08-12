@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Coins, History, ShieldCheck, Sparkles, Trophy, Vote } from "lucide-react";
+import { Coins, Gem, Gift, History, ShieldCheck, Sparkles, Trophy, Vote } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageShell";
 import { Section } from "@/components/aether/Section";
 import { demoPlayer } from "@/data/player";
@@ -23,7 +23,9 @@ export const Route = createFileRoute("/compte")({
 const cards = [
   { icon: Sparkles, label: "Grade", value: demoPlayer.grade },
   { icon: Coins, label: "Aether Coins", value: demoPlayer.coins },
-  { icon: Vote, label: "Votes", value: demoPlayer.votes },
+  { icon: Gem, label: "Éclats", value: demoPlayer.shards },
+  { icon: Vote, label: "Votes du mois", value: demoPlayer.monthlyVotes },
+  { icon: Vote, label: "Votes au total", value: demoPlayer.votes },
   { icon: Trophy, label: "Niveau d'île", value: demoPlayer.islandLevel },
 ];
 
@@ -51,7 +53,7 @@ function ComptePage() {
           </span>
         </div>
 
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {cards.map(({ icon: Icon, label, value }) => (
             <div key={label} className="aether-surface lift rounded-2xl p-5">
               <Icon size={17} className="text-secondary" />
@@ -97,6 +99,23 @@ function ComptePage() {
                 </li>
               ))}
             </ul>
+          </div>
+        </div>
+
+        <div className="aether-surface mt-6 rounded-2xl p-6">
+          <div className="flex items-center gap-2">
+            <Gift size={16} className="text-secondary" />
+            <h2 className="text-lg font-semibold text-foreground">Récompenses</h2>
+          </div>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {demoPlayer.rewards.map((reward) => (
+              <div key={reward.label} className="rounded-xl border border-border p-4">
+                <p className="text-sm text-foreground">{reward.label}</p>
+                <p className="mt-1 text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground">
+                  {reward.status}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
 

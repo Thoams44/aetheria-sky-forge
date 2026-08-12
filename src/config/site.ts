@@ -7,7 +7,10 @@ export const siteConfig = {
   mark: "✦",
   tagline: "Une expérience SkyBlock unique.",
   serverIp: "play.aetheriasky.fr",
-  // TODO: remplacer par le vrai lien Discord
+  /**
+   * Lien Discord officiel AetheriaSky.
+   * Unique endroit à modifier : header, hero, footer et menu mobile l'utilisent tous.
+   */
   discordUrl: "https://discord.gg/aetheriasky",
   domain: "https://aetheriasky.fr",
 } as const;
