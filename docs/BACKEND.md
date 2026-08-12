@@ -13,7 +13,7 @@ et peuvent être rejouées sur n'importe quel Postgres, OVH inclus).
 | `currency_transactions` | historique `AETHER_COINS` / `SHARDS` (CREDIT / DEBIT + `reason`) |
 | `vote_platforms` | 4 plateformes fictives, cooldown, URL à définir |
 | `votes` | statuts `PENDING` / `VALIDATED` / `REWARDED` / `REJECTED`, index unique `(platform_id, external_vote_id)` anti double-récompense |
-| `vote_milestones` | 6 paliers cumulatifs : 10, 25, 50, 75, 100, 150 (Éclats à définir) |
+| `vote_milestones` | 6 paliers cumulatifs : 10→8 AC, 25→16 AC, 50→28 AC, 75→40 AC, 100→80 AC, 150→120 AC + clé spéciale (`bonus_reward`) |
 | `player_milestone_claims` | palier réclamé une seule fois par joueur (contrainte unique) |
 | `store_products` | types `GRADE` et `AETHER_COINS` (packs 500/1000/2500/5000) |
 | `orders` | `order_number` auto, statuts complets, `mode` = `REAL` ou `TEST` |
@@ -26,7 +26,7 @@ et peuvent être rejouées sur n'importe quel Postgres, OVH inclus).
 
 - Une commande payée n'est **jamais** considérée livrée : la livraison passe par `deliveries`.
 - Chaque vote validé donnera **1 Clé de Vote** via une ligne `deliveries` de type `VOTE_KEY`.
-- Les paliers donnent des **Éclats** (monnaie de vote), jamais des Aether Coins.
+- Les paliers donnent des **Aether Coins** (`aether_coins_reward`). Les Éclats (`SHARDS`) restent dans l'architecture pour un usage futur.
 - Les commandes `mode = TEST` ne déclenchent jamais de paiement réel (réservé admin/fondateur).
 
 ## Sécurité (RLS)
