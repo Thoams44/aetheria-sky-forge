@@ -121,8 +121,9 @@ export function VoteProfileCard({
         </div>
       </div>
       <p className="mt-4 text-xs text-muted-foreground">
-        Les Éclats s'obtiennent uniquement par le vote. Les Aether Coins, eux,
-        sont la monnaie premium de la boutique : les deux ne se mélangent pas.
+        Chaque vote validé donne 1 Clé de Vote en jeu, et chaque palier atteint
+        verse des Aether Coins (AC). Les Éclats restent une monnaie distincte,
+        conservée pour de futurs usages.
       </p>
     </div>
   );
