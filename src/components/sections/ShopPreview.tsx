@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Coins, Sparkles } from "lucide-react";
-import coinsImage from "@/assets/aether-coins.jpg";
+import { Coins, Gem, Sparkles } from "lucide-react";
 import { Section, SectionHeading } from "@/components/aether/Section";
 import { grades } from "@/data/shop";
 import { cn } from "@/lib/utils";
@@ -73,14 +72,26 @@ export function ShopPreview() {
             Découvrir la boutique
           </Link>
         </div>
-        <img
-          src={coinsImage}
-          alt="Aether Coins, pièces magiques violettes gravées d'or"
-          loading="lazy"
-          width={1024}
-          height={768}
-          className="float-slow mx-auto w-full max-w-sm rounded-2xl"
-        />
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+          <div className="rounded-2xl border border-premium/25 bg-premium/8 p-5">
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-premium/15 text-premium">
+              <Coins size={16} />
+            </span>
+            <p className="mt-3 font-display text-base text-foreground">Aether Coins</p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Monnaie premium — achetée sur le site, dépensée en jeu.
+            </p>
+          </div>
+          <div className="rounded-2xl border border-info/25 bg-info/8 p-5">
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-info/15 text-info">
+              <Gem size={16} />
+            </span>
+            <p className="mt-3 font-display text-base text-foreground">Éclats</p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Monnaie gratuite — obtenue via les paliers de vote.
+            </p>
+          </div>
+        </div>
       </div>
     </Section>
   );
