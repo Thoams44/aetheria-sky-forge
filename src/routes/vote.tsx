@@ -82,7 +82,7 @@ function VotePage() {
         <SectionHeading
           eyebrow="Paliers"
           title="Récompenses de vote"
-          description="Les paliers sont cumulatifs : atteindre 100 votes signifie avoir débloqué tous les paliers précédents. Les récompenses sont versées en Éclats."
+          description="Les paliers sont cumulatifs : atteindre 150 votes signifie avoir débloqué les 6 paliers. Les récompenses sont versées en Éclats."
         />
         <div className="mt-10">
           <VoteTierList votes={votes} />

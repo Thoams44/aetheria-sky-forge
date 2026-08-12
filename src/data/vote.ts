@@ -117,12 +117,14 @@ export const votePlatforms: VotePlatform[] = [
   },
 ];
 
-/** Paliers cumulatifs : atteindre 100 votes débloque aussi 10, 25 et 50. */
+/** Paliers cumulatifs : atteindre 150 votes débloque les 6 paliers. */
 export const voteTiers: VoteTier[] = [
   { votes: 10, reward: "Récompense à définir" },
   { votes: 25, reward: "Récompense à définir" },
   { votes: 50, reward: "Récompense à définir" },
+  { votes: 75, reward: "Récompense à définir" },
   { votes: 100, reward: "Récompense à définir" },
+  { votes: 150, reward: "Récompense à définir" },
 ];
 
 /** Progression communautaire du mois (utilisée aussi sur l'accueil). */
