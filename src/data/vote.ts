@@ -47,7 +47,11 @@ export type PlatformVoteState = {
 
 export type VoteTier = {
   votes: number;
-  /** Récompense en Éclats — quantités à définir. */
+  /** Récompense en Aether Coins (AC) du palier. */
+  coins: number;
+  /** Bonus additionnel éventuel (dernier palier). */
+  bonus?: string;
+  /** Libellé affiché de la récompense. */
   reward: string;
 };
 
@@ -117,21 +121,29 @@ export const votePlatforms: VotePlatform[] = [
   },
 ];
 
-/** Paliers cumulatifs : atteindre 150 votes débloque les 6 paliers. */
+/**
+ * Paliers cumulatifs : atteindre 150 votes débloque les 6 paliers.
+ * Récompense des paliers = Aether Coins (AC), jamais des Éclats.
+ */
 export const voteTiers: VoteTier[] = [
-  { votes: 10, reward: "Récompense à définir" },
-  { votes: 25, reward: "Récompense à définir" },
-  { votes: 50, reward: "Récompense à définir" },
-  { votes: 75, reward: "Récompense à définir" },
-  { votes: 100, reward: "Récompense à définir" },
-  { votes: 150, reward: "Récompense à définir" },
+  { votes: 10, coins: 8, reward: "8 AC" },
+  { votes: 25, coins: 16, reward: "16 AC" },
+  { votes: 50, coins: 28, reward: "28 AC" },
+  { votes: 75, coins: 40, reward: "40 AC" },
+  { votes: 100, coins: 80, reward: "80 AC" },
+  {
+    votes: 150,
+    coins: 120,
+    bonus: "Clé spéciale — nom à définir",
+    reward: "120 AC + Clé spéciale — nom à définir",
+  },
 ];
 
 /** Progression communautaire du mois (utilisée aussi sur l'accueil). */
 export const voteProgress = {
   current: 37,
   goal: 50,
-  nextReward: "Éclats — récompense à définir",
+  nextReward: "8 AC au palier 10 votes",
 };
 
 /** Profil de démonstration renvoyé après saisie d'un pseudo. */
