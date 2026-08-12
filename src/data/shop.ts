@@ -11,21 +11,21 @@ export const grades: Grade[] = [
   {
     id: "vip",
     name: "VIP",
-    price: "4,99 €",
+    price: "Prix à définir",
     accent: "info",
     perks: ["Préfixe VIP", "2 homes supplémentaires", "Kit hebdomadaire"],
   },
   {
     id: "mvp",
     name: "MVP",
-    price: "9,99 €",
+    price: "Prix à définir",
     accent: "secondary",
     perks: ["Avantages VIP", "Accès aux warps privés", "Couleurs de chat"],
   },
   {
     id: "elite",
     name: "ELITE",
-    price: "19,99 €",
+    price: "Prix à définir",
     accent: "primary",
     highlight: true,
     perks: ["Avantages MVP", "Extension d'île +25%", "File d'attente prioritaire"],
@@ -33,7 +33,7 @@ export const grades: Grade[] = [
   {
     id: "ultime",
     name: "ULTIME",
-    price: "39,99 €",
+    price: "Prix à définir",
     accent: "premium",
     perks: ["Tous les avantages", "Cosmétiques exclusifs", "Familier légendaire"],
   },
