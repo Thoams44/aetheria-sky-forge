@@ -41,19 +41,30 @@ export const Route = createFileRoute("/api/public/tsttests")({
             },
           });
           let allowed = true;
+          let reason: string | null = null;
           try {
             await mod.assertAdmin(scoped as never, userId!);
-          } catch {
+          } catch (e) {
             allowed = false;
+            reason = e instanceof Error ? e.message : "?";
           }
-          out.push({ role, allowed });
+          const probe = await scoped.from("user_roles").select("role").eq("user_id", userId!);
+          out.push({ role, allowed, reason, hasToken: Boolean(token), probe: probe.data, probeErr: probe.error?.message });
         }
 
         const actor = (await supabaseAdmin.auth.admin.listUsers({ perPage: 200 })).data.users.find(
           (u) => u.email === "qa-fondateur@aetheriasky.test",
         )!.id;
 
-        const { data: player } = await supabaseAdmin.from("players").select("id").limit(1).maybeSingle();
+        let { data: player } = await supabaseAdmin.from("players").select("id").limit(1).maybeSingle();
+        if (!player) {
+          const ins = await supabaseAdmin
+            .from("players")
+            .insert({ minecraft_username: "QA_TestPlayer", verified: true })
+            .select("id")
+            .single();
+          player = ins.data;
+        }
         const { data: product } = await supabaseAdmin
           .from("store_products")
           .select("id, type")
