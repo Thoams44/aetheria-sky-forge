@@ -78,8 +78,11 @@ function BoutiquePage() {
         </div>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
           Quatre paliers de soutien, du VIP au grade le plus prestigieux du
-          serveur. Les avantages détaillés de chaque grade seront publiés
-          prochainement.
+          serveur.
+        </p>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-secondary">
+          Les avantages sont cumulatifs : chaque grade supérieur conserve tous
+          les avantages des grades précédents.
         </p>
         {grades.length === 0 ? (
           emptyState("Aucun grade disponible pour le moment.")

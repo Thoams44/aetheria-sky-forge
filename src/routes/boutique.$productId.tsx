@@ -94,6 +94,12 @@ function ProductPage() {
             <h3 className="mt-9 text-sm font-semibold uppercase tracking-[0.2em] text-foreground">
               Avantages
             </h3>
+            {product.type === "grade" && (
+              <p className="mt-3 text-xs leading-relaxed text-secondary">
+                Les avantages sont cumulatifs : chaque grade supérieur conserve
+                tous les avantages des grades précédents.
+              </p>
+            )}
             <ul className="mt-5 grid gap-3 sm:grid-cols-2">
               {(product.advantages.length ? product.advantages : ["Contenu à définir"]).map(
                 (a: string, i: number) => (
@@ -107,10 +113,11 @@ function ProductPage() {
                 ),
               )}
             </ul>
-            <p className="mt-6 text-xs text-muted-foreground">
-              La liste complète des avantages sera publiée ici dès qu'elle sera
-              définie.
-            </p>
+            {product.type === "grade" && (
+              <p className="mt-6 text-xs text-muted-foreground">
+                Les kits sont cumulés et se renouvellent tous les 3 jours.
+              </p>
+            )}
           </div>
 
           <aside className="aether-surface h-fit rounded-3xl p-7 lg:sticky lg:top-24">
