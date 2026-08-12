@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BoutiqueRouteImport } from './routes/boutique'
 import { Route as ClassementsRouteImport } from './routes/classements'
+import { Route as CompteRouteImport } from './routes/compte'
+import { Route as ReglementRouteImport } from './routes/reglement'
 import { Route as VoteRouteImport } from './routes/vote'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,6 +31,16 @@ const ClassementsRoute = ClassementsRouteImport.update({
   path: '/classements',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompteRoute = CompteRouteImport.update({
+  id: '/compte',
+  path: '/compte',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReglementRoute = ReglementRouteImport.update({
+  id: '/reglement',
+  path: '/reglement',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VoteRoute = VoteRouteImport.update({
   id: '/vote',
   path: '/vote',
@@ -39,12 +51,16 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/boutique': typeof BoutiqueRoute
   '/classements': typeof ClassementsRoute
+  '/compte': typeof CompteRoute
+  '/reglement': typeof ReglementRoute
   '/vote': typeof VoteRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/boutique': typeof BoutiqueRoute
   '/classements': typeof ClassementsRoute
+  '/compte': typeof CompteRoute
+  '/reglement': typeof ReglementRoute
   '/vote': typeof VoteRoute
 }
 export interface FileRoutesById {
@@ -52,20 +68,32 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/boutique': typeof BoutiqueRoute
   '/classements': typeof ClassementsRoute
+  '/compte': typeof CompteRoute
+  '/reglement': typeof ReglementRoute
   '/vote': typeof VoteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/boutique' | '/classements' | '/vote'
+  fullPaths:
+    '/' | '/boutique' | '/classements' | '/compte' | '/reglement' | '/vote'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/boutique' | '/classements' | '/vote'
-  id: '__root__' | '/' | '/boutique' | '/classements' | '/vote'
+  to: '/' | '/boutique' | '/classements' | '/compte' | '/reglement' | '/vote'
+  id:
+    | '__root__'
+    | '/'
+    | '/boutique'
+    | '/classements'
+    | '/compte'
+    | '/reglement'
+    | '/vote'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BoutiqueRoute: typeof BoutiqueRoute
   ClassementsRoute: typeof ClassementsRoute
+  CompteRoute: typeof CompteRoute
+  ReglementRoute: typeof ReglementRoute
   VoteRoute: typeof VoteRoute
 }
 
@@ -92,6 +120,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClassementsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compte': {
+      id: '/compte'
+      path: '/compte'
+      fullPath: '/compte'
+      preLoaderRoute: typeof CompteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reglement': {
+      id: '/reglement'
+      path: '/reglement'
+      fullPath: '/reglement'
+      preLoaderRoute: typeof ReglementRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/vote': {
       id: '/vote'
       path: '/vote'
@@ -106,6 +148,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BoutiqueRoute: BoutiqueRoute,
   ClassementsRoute: ClassementsRoute,
+  CompteRoute: CompteRoute,
+  ReglementRoute: ReglementRoute,
   VoteRoute: VoteRoute,
 }
 export const routeTree = rootRouteImport
