@@ -2,7 +2,6 @@ import { useState } from "react";
 import { LogIn, Mail } from "lucide-react";
 import { AetherButton } from "@/components/aether/AetherButton";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable";
 
 /** Identification du joueur — sans session, aucune donnée privée n'est chargée. */
 export function AccountSignIn({ onSignedIn }: { onSignedIn: () => void }) {
@@ -38,18 +37,6 @@ export function AccountSignIn({ onSignedIn }: { onSignedIn: () => void }) {
     onSignedIn();
   }
 
-  async function google() {
-    setError(null);
-    try {
-      await lovable.auth.signInWithOAuth("google", {
-        redirect_uri: window.location.origin,
-      });
-      onSignedIn();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Connexion impossible.");
-    }
-  }
-
   return (
     <div className="aether-surface mx-auto max-w-md rounded-3xl p-8">
       <div className="flex items-center gap-2">
@@ -61,14 +48,6 @@ export function AccountSignIn({ onSignedIn }: { onSignedIn: () => void }) {
       <p className="mt-4 text-sm text-muted-foreground">
         Connecte-toi pour afficher ton grade, tes monnaies, tes votes et tes commandes.
       </p>
-
-      <AetherButton variant="outline" size="sm" className="mt-6 w-full" onClick={google}>
-        Continuer avec Google
-      </AetherButton>
-
-      <div className="my-5 flex items-center gap-3 text-[0.6rem] uppercase tracking-[0.2em] text-muted-foreground">
-        <span className="h-px flex-1 bg-border" /> ou <span className="h-px flex-1 bg-border" />
-      </div>
 
       <form className="space-y-3" onSubmit={submit}>
         <input
