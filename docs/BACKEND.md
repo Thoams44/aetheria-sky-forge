@@ -44,3 +44,19 @@ Fonctions de contrôle : `public.has_role`, `public.is_staff`, `public.is_admin`
 - `src/lib/backend/account.functions.ts` : lectures privées de l'espace joueur (authentifiées).
 
 L'interface actuelle utilise encore les données fictives de `src/data/*` : le branchement se fera à l'étape suivante.
+
+## Système de TEST boutique (FONDATEUR / ADMIN)
+
+Page privée `/admin/tests` — parcours simulé de bout en bout, sans paiement réel
+ni contact avec Minecraft / AetheriaCore.
+
+- Rôles autorisés : `fondateur` (nouveau) et `admin`. `staff` et `player` sont refusés.
+- Le rôle est vérifié **côté serveur** dans chaque server function
+  (`src/lib/backend/admin-tests.functions.ts` → `assertAdmin`), jamais côté navigateur.
+- Logique métier : `src/lib/backend/admin-tests.server.ts` (prix et totaux relus en base,
+  commandes strictement `mode = TEST`, jamais convertibles en `REAL`).
+- Actions journalisées dans `audit_logs` : `TEST_ORDER_CREATED`, `TEST_PAYMENT_SIMULATED`,
+  `TEST_DELIVERY_CREATED`, `TEST_DELIVERY_FAILED`, `TEST_DELIVERY_RETRY`,
+  `TEST_DELIVERY_COMPLETED`.
+- Aucune monnaie réelle créditée, aucun grade réel modifié : la livraison TEST stocke
+  seulement un aperçu du futur message Minecraft dans `deliveries.payload`.
