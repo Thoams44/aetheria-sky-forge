@@ -40,14 +40,12 @@ function ComptePage() {
       <Section>
         <AccountProfileHeader account={account} />
 
-        <div className="mt-6 grid gap-4 lg:grid-cols-3">
+        <div className="mt-6 grid gap-4 lg:grid-cols-[1fr_2fr]">
           <AccountGradeCard grade={account.grade} />
-          <div className="lg:col-span-2">
-            <AccountCurrencies
-              aetherCoins={account.aetherCoins}
-              shards={account.shards}
-            />
-          </div>
+          <AccountCurrencies
+            aetherCoins={account.aetherCoins}
+            shards={account.shards}
+          />
         </div>
 
         <div className="mt-6">
