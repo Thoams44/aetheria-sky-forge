@@ -1,8 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Coins, Gem, Gift, History, ShieldCheck, Sparkles, Trophy, Vote } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import {
+  Coins,
+  Gem,
+  Gift,
+  History,
+  Package,
+  ShieldCheck,
+  Sparkles,
+  Trophy,
+  Vote,
+} from "lucide-react";
 import { PageHeader } from "@/components/layout/PageShell";
 import { Section } from "@/components/aether/Section";
 import { demoPlayer } from "@/data/player";
+import { demoOrders, orderStatusLabel } from "@/data/orders";
 
 const title = "Mon compte — Espace joueur AetheriaSky";
 const description =
