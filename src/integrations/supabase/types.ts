@@ -448,6 +448,7 @@ export type Database = {
       store_products: {
         Row: {
           active: boolean
+          bonus_quantity: number
           created_at: string
           currency: string
           description: string | null
@@ -463,6 +464,7 @@ export type Database = {
         }
         Insert: {
           active?: boolean
+          bonus_quantity?: number
           created_at?: string
           currency?: string
           description?: string | null
@@ -478,6 +480,7 @@ export type Database = {
         }
         Update: {
           active?: boolean
+          bonus_quantity?: number
           created_at?: string
           currency?: string
           description?: string | null

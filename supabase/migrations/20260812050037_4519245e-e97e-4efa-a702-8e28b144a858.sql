@@ -1,0 +1,1 @@
+ALTER TABLE public.store_products ADD COLUMN IF NOT EXISTS bonus_quantity integer NOT NULL DEFAULT 0;
