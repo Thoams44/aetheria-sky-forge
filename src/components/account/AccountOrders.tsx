@@ -1,29 +1,11 @@
-import { AlertTriangle, CheckCircle2, Clock, Package } from "lucide-react";
+import { Package } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import { demoOrders, type OrderStatus } from "@/data/orders";
+import { formatDate, formatPrice, orderStatusLabel, orderStatusTone } from "@/data/account";
+import type { AccountOrderDTO } from "@/lib/backend/account.server";
 
-const statusMeta: Record<
-  OrderStatus,
-  { label: string; tone: string; Icon: typeof CheckCircle2 }
-> = {
-  delivered: {
-    label: "Livré",
-    tone: "border-success/40 bg-success/10 text-success",
-    Icon: CheckCircle2,
-  },
-  pending: {
-    label: "En attente",
-    tone: "border-premium/40 bg-premium/10 text-premium",
-    Icon: Clock,
-  },
-  cancelled: {
-    label: "Problème",
-    tone: "border-destructive/40 bg-destructive/10 text-destructive",
-    Icon: AlertTriangle,
-  },
-};
+export function AccountOrders({ orders }: { orders: AccountOrderDTO[] }) {
+  const list = Array.isArray(orders) ? orders : [];
 
-export function AccountOrders() {
   return (
     <div className="aether-surface rounded-2xl p-6">
       <div className="flex flex-wrap items-center gap-2">
@@ -39,32 +21,40 @@ export function AccountOrders() {
         </Link>
       </div>
 
-      <ul className="mt-5 divide-y divide-border">
-        {demoOrders.map((order) => {
-          const { label, tone, Icon } = statusMeta[order.status];
-          return (
-            <li
-              key={order.id}
-              className="flex flex-wrap items-center gap-3 py-4 sm:gap-5"
-            >
-              <span className="font-mono text-xs text-muted-foreground">{order.id}</span>
-              <span className="min-w-0 flex-1 truncate text-sm text-foreground">
-                {order.items.join(", ")}
-              </span>
-              <span className="text-xs text-muted-foreground">{order.date}</span>
-              <span
-                className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[0.6rem] uppercase tracking-[0.14em] ${tone}`}
-              >
-                <Icon size={11} /> {label}
-              </span>
-            </li>
-          );
-        })}
-      </ul>
-
-      <p className="mt-4 text-xs text-muted-foreground">
-        Commandes de démonstration — elles proviendront plus tard du système de boutique.
-      </p>
+      {list.length === 0 ? (
+        <p className="mt-5 text-sm text-muted-foreground">Aucune commande enregistrée.</p>
+      ) : (
+        <ul className="mt-5 divide-y divide-border">
+          {list.map((order) => {
+            const tone =
+              orderStatusTone[order.status] ?? "border-border bg-accent/50 text-muted-foreground";
+            const label = orderStatusLabel[order.status] ?? order.status;
+            return (
+              <li key={order.id} className="flex flex-wrap items-center gap-3 py-4 sm:gap-5">
+                <span className="font-mono text-xs text-muted-foreground">
+                  {order.orderNumber}
+                </span>
+                <span className="min-w-0 flex-1 truncate text-sm text-foreground">
+                  {order.items.length > 0
+                    ? order.items.map((i) => `${i.quantity} × ${i.name}`).join(", ")
+                    : "Contenu à définir"}
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  {formatDate(order.createdAt)}
+                </span>
+                <span className="text-xs text-foreground">
+                  {formatPrice(order.total, order.currency)}
+                </span>
+                <span
+                  className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[0.6rem] uppercase tracking-[0.14em] ${tone}`}
+                >
+                  {label}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 }
