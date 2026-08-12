@@ -4,7 +4,9 @@ import { PageHeader } from "@/components/layout/PageShell";
 import { Section } from "@/components/aether/Section";
 import { GradeCard } from "@/components/shop/GradeCard";
 import { CoinPackCard } from "@/components/shop/CoinPackCard";
-import { getProducts } from "@/data/products";
+import { useQuery } from "@tanstack/react-query";
+import { shopCatalogQuery } from "@/lib/cart";
+import type { Product } from "@/data/products";
 
 const title = "Boutique — Grades & Aether Coins | AetheriaSky";
 const description =
@@ -23,8 +25,20 @@ export const Route = createFileRoute("/boutique/")({
 });
 
 function BoutiquePage() {
-  const grades = getProducts("grade");
-  const packs = getProducts("coins");
+  const { data, isLoading, isError } = useQuery(shopCatalogQuery);
+  const catalog = (Array.isArray(data) ? data : []) as Product[];
+  const grades = catalog.filter((p) => p.type === "grade");
+  const packs = catalog.filter((p) => p.type === "coins");
+
+  const emptyState = (label: string) => (
+    <p className="mt-10 rounded-2xl border border-dashed border-border px-5 py-10 text-center text-sm text-muted-foreground">
+      {isLoading
+        ? "Chargement de la boutique…"
+        : isError
+          ? "La boutique est momentanément indisponible. Réessaie dans un instant."
+          : label}
+    </p>
+  );
 
   return (
     <>
@@ -67,11 +81,15 @@ function BoutiquePage() {
           serveur. Les avantages détaillés de chaque grade seront publiés
           prochainement.
         </p>
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-          {grades.map((product) => (
-            <GradeCard key={product.id} product={product} />
-          ))}
-        </div>
+        {grades.length === 0 ? (
+          emptyState("Aucun grade disponible pour le moment.")
+        ) : (
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+            {grades.map((product) => (
+              <GradeCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
       </Section>
 
       <Section id="aether-coins" className="border-t border-border bg-surface/30">
@@ -88,11 +106,15 @@ function BoutiquePage() {
           À ne pas confondre avec les Éclats, la monnaie gratuite obtenue grâce
           aux paliers de vote.
         </p>
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {packs.map((product) => (
-            <CoinPackCard key={product.id} product={product} />
-          ))}
-        </div>
+        {packs.length === 0 ? (
+          emptyState("Aucun pack d'Aether Coins disponible pour le moment.")
+        ) : (
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {packs.map((product) => (
+              <CoinPackCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
         <p className="mt-10 text-xs text-muted-foreground">
           Aucun paiement n'est actif : les tarifs et les avantages seront
           renseignés avant l'ouverture de la boutique.

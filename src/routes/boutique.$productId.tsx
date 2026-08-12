@@ -4,14 +4,39 @@ import { PageHeader } from "@/components/layout/PageShell";
 import { Section } from "@/components/aether/Section";
 import { AddToCartButton } from "@/components/shop/AddToCartButton";
 import { ProductIcon } from "@/components/shop/ProductIcon";
-import { formatPrice, getProduct } from "@/data/products";
+import { formatPrice, type Product } from "@/data/products";
+import { getShopCatalog } from "@/lib/backend/shop.functions";
 
 export const Route = createFileRoute("/boutique/$productId")({
-  loader: ({ params }) => {
-    const product = getProduct(params.productId);
+  loader: async ({ params }) => {
+    const catalog = await getShopCatalog();
+    const product = (Array.isArray(catalog) ? catalog : []).find(
+      (p) => p.id === params.productId || p.slug === params.productId,
+    );
     if (!product) throw notFound();
-    return { product };
+    return { product: product as Product };
   },
+  errorComponent: () => (
+    <Section>
+      <p className="aether-surface rounded-3xl p-10 text-center text-sm text-muted-foreground">
+        Ce produit n'a pas pu être chargé. Reviens à la{" "}
+        <Link to="/boutique" className="text-secondary hover:underline">
+          boutique
+        </Link>
+        .
+      </p>
+    </Section>
+  ),
+  notFoundComponent: () => (
+    <Section>
+      <p className="aether-surface rounded-3xl p-10 text-center text-sm text-muted-foreground">
+        Produit introuvable ou désactivé.{" "}
+        <Link to="/boutique" className="text-secondary hover:underline">
+          Retour à la boutique
+        </Link>
+      </p>
+    </Section>
+  ),
   head: ({ loaderData }) => {
     if (!loaderData) {
       return {
@@ -19,7 +44,7 @@ export const Route = createFileRoute("/boutique/$productId")({
       };
     }
     const t = `${loaderData.product.name} — Boutique AetheriaSky`;
-    const d = loaderData.product.description;
+    const d = loaderData.product.description ?? "";
     return {
       meta: [
         { title: t },
