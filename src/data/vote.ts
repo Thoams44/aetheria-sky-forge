@@ -8,6 +8,7 @@ export type VotePlatform = {
 
 export type VoteTier = {
   votes: number;
+  /** Récompense en Éclats — quantités à définir. */
   reward: string;
 };
 
@@ -15,7 +16,7 @@ export type VoteTier = {
 export const voteProgress = {
   current: 37,
   goal: 50,
-  nextReward: "Clé Légendaire",
+  nextReward: "Éclats — récompense à définir",
 };
 
 export const votePlatforms: VotePlatform[] = [
@@ -26,8 +27,8 @@ export const votePlatforms: VotePlatform[] = [
 ];
 
 export const voteTiers: VoteTier[] = [
-  { votes: 10, reward: "Clé Commune" },
-  { votes: 25, reward: "Coffre d'Aether" },
-  { votes: 50, reward: "Clé Légendaire" },
-  { votes: 100, reward: "Familier Céleste" },
+  { votes: 10, reward: "Récompense à définir" },
+  { votes: 25, reward: "Récompense à définir" },
+  { votes: 50, reward: "Récompense à définir" },
+  { votes: 100, reward: "Récompense à définir" },
 ];

@@ -63,8 +63,10 @@ function BoutiquePage() {
             <h2 className="font-display text-2xl text-foreground">Aether Coins</h2>
           </div>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-            Une monnaie premium créditée sur ton compte, dépensable en jeu quand
-            tu le souhaites.
+            Une monnaie premium achetée ici puis créditée sur ton compte,
+            dépensable en jeu : clés, cosmétiques et récompenses. Distincte des
+            <span className="text-info"> Éclats</span>, la monnaie gratuite
+            obtenue grâce aux votes.
           </p>
           <div className="mt-8 grid gap-4 sm:grid-cols-3">
             {coinPacks.map((pack) => (

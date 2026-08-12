@@ -4,6 +4,7 @@ import { Adventure } from "@/components/sections/Adventure";
 import { VoteSection } from "@/components/sections/VoteSection";
 import { LeaderboardsSection } from "@/components/sections/LeaderboardsSection";
 import { ShopPreview } from "@/components/sections/ShopPreview";
+import { SupportersSection } from "@/components/sections/SupportersSection";
 
 const title = "AetheriaSky — Serveur Minecraft SkyBlock premium";
 const description =
@@ -29,6 +30,7 @@ function Index() {
       <VoteSection />
       <LeaderboardsSection />
       <ShopPreview />
+      <SupportersSection />
     </>
   );
 }
