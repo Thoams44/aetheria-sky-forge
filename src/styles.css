@@ -5,6 +5,11 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
+ * AetheriaSky — design system
+ * Thème sombre premium : nuit d'altitude, violet Aetheria, lumière douce.
+ */
+
+/*
  * Design system definition.
  *
  * The @theme inline block maps CSS custom properties to Tailwind utility
