@@ -39,7 +39,9 @@ export const getVoteMilestones = createServerFn({ method: "GET" }).handler(async
   const { createPublicServerClient } = await import("./supabase-public.server");
   const { data, error } = await createPublicServerClient()
     .from("vote_milestones")
-    .select("id, vote_count_required, shards_reward, display_order")
+    .select(
+      "id, vote_count_required, aether_coins_reward, bonus_reward, shards_reward, display_order",
+    )
     .eq("active", true)
     .order("vote_count_required");
   if (error) throw new Error(error.message);
