@@ -2,6 +2,8 @@ import { AddToCartButton } from "@/components/shop/AddToCartButton";
 import { ProductIcon } from "@/components/shop/ProductIcon";
 import { formatPrice, type Product } from "@/data/products";
 
+const formatCoins = (value: number) => new Intl.NumberFormat("fr-FR").format(value);
+
 export function CoinPackCard({ product }: { product: Product }) {
   return (
     <article className="aether-surface lift relative flex flex-col rounded-2xl p-6">
