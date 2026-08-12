@@ -34,7 +34,7 @@ export function AccountVotes({
         <p className="text-xs text-muted-foreground">
           {totalVotes} votes au total ·{" "}
           <span className="inline-flex items-center gap-1 text-foreground">
-            <Gem size={12} className="text-info" /> {formatAmount(shards)} Éclats gagnés
+            <Gem size={12} className="text-info" /> {formatAmount(shards)} Éclats
           </span>
         </p>
       </div>
@@ -48,8 +48,9 @@ export function AccountVotes({
 
       {next && (
         <p className="mt-3 text-xs text-muted-foreground">
-          Prochain palier : <span className="text-secondary">{next.tier.votes} votes</span> —
-          récompense en Éclats ({next.tier.reward}). Plus que {next.remaining} votes.
+          Prochain palier : <span className="text-secondary">{next.tier.votes} votes</span> —{" "}
+          <span className="text-premium">{next.tier.reward}</span>. Plus que {next.remaining}{" "}
+          votes.
         </p>
       )}
 
@@ -66,7 +67,9 @@ export function AccountVotes({
                   : "border-border bg-surface/40",
             )}
           >
-            <span className="text-foreground">{tier.votes} votes</span>
+            <span className="text-foreground">
+              {tier.votes} votes · <span className="text-premium">{tier.coins} AC</span>
+            </span>
             <span className="flex items-center gap-1.5 text-muted-foreground">
               {state === "unlocked" ? (
                 <>
