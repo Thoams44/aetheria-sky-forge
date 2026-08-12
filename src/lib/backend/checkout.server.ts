@@ -300,7 +300,7 @@ async function createDeliveries(orderId: string) {
 
   const { data: items } = await supabaseAdmin
     .from("order_items")
-    .select("quantity, store_products(name, type, quantity, grade_id)")
+    .select("quantity, store_products(name, type, quantity, bonus_quantity, grade_id)")
     .eq("order_id", orderId);
 
   const { data: order } = await supabaseAdmin
@@ -314,13 +314,20 @@ async function createDeliveries(orderId: string) {
 
   for (const item of items ?? []) {
     const product = item.store_products as
-      | { name: string; type: string; quantity: number | null; grade_id: string | null }
+      | {
+          name: string;
+          type: string;
+          quantity: number | null;
+          bonus_quantity: number | null;
+          grade_id: string | null;
+        }
       | null;
     if (!product) continue;
     if (product.type === "GRADE") {
       grade = { name: product.name, gradeId: product.grade_id };
     } else {
-      coins += (product.quantity ?? 0) * item.quantity;
+      // Quantité finale créditée = base + bonus, relue depuis la base.
+      coins += ((product.quantity ?? 0) + (product.bonus_quantity ?? 0)) * item.quantity;
     }
   }
 
