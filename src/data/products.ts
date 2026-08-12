@@ -27,6 +27,10 @@ export type Product = {
   badge?: string;
   /** Quantité d'Aether Coins pour les packs. */
   amount?: number;
+  /** Quantité de base (hors bonus). */
+  baseAmount?: number;
+  /** Bonus offert en Aether Coins. */
+  bonusAmount?: number;
 };
 
 type Presentation = {
@@ -83,6 +87,17 @@ export const productPresentation: Record<string, Presentation> = {
     description: "Le plus grand pack disponible sur la boutique AetheriaSky.",
     icon: "Coins",
     color: "premium",
+  },
+  "coins-12000": {
+    description: "Un très gros pack pour les îles les plus ambitieuses.",
+    icon: "Coins",
+    color: "premium",
+  },
+  "coins-20000": {
+    description: "Le pack ultime d'AetheriaSky, avec le plus gros bonus offert.",
+    icon: "Coins",
+    color: "premium",
+    badge: "Prestige",
   },
 };
 
