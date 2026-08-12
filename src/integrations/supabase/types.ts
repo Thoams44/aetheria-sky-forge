@@ -14,6 +14,47 @@ export type Database = {
   }
   public: {
     Tables: {
+      currency_transactions: {
+        Row: {
+          amount: number
+          created_at: string
+          currency_type: Database["public"]["Enums"]["currency_type"]
+          id: string
+          player_id: string
+          reason: string
+          reference_id: string | null
+          type: Database["public"]["Enums"]["transaction_type"]
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency_type: Database["public"]["Enums"]["currency_type"]
+          id?: string
+          player_id: string
+          reason: string
+          reference_id?: string | null
+          type: Database["public"]["Enums"]["transaction_type"]
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency_type?: Database["public"]["Enums"]["currency_type"]
+          id?: string
+          player_id?: string
+          reason?: string
+          reference_id?: string | null
+          type?: Database["public"]["Enums"]["transaction_type"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "currency_transactions_player_id_fkey"
+            columns: ["player_id"]
+            isOneToOne: false
+            referencedRelation: "players"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       grades: {
         Row: {
           active: boolean
@@ -61,6 +102,45 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      player_milestone_claims: {
+        Row: {
+          claimed_at: string
+          id: string
+          milestone_id: string
+          player_id: string
+          shards_granted: number
+        }
+        Insert: {
+          claimed_at?: string
+          id?: string
+          milestone_id: string
+          player_id: string
+          shards_granted?: number
+        }
+        Update: {
+          claimed_at?: string
+          id?: string
+          milestone_id?: string
+          player_id?: string
+          shards_granted?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "player_milestone_claims_milestone_id_fkey"
+            columns: ["milestone_id"]
+            isOneToOne: false
+            referencedRelation: "vote_milestones"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "player_milestone_claims_player_id_fkey"
+            columns: ["player_id"]
+            isOneToOne: false
+            referencedRelation: "players"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       players: {
         Row: {
@@ -139,6 +219,129 @@ export type Database = {
         }
         Relationships: []
       }
+      vote_milestones: {
+        Row: {
+          active: boolean
+          created_at: string
+          display_order: number
+          id: string
+          shards_reward: number | null
+          updated_at: string
+          vote_count_required: number
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          display_order?: number
+          id?: string
+          shards_reward?: number | null
+          updated_at?: string
+          vote_count_required: number
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          display_order?: number
+          id?: string
+          shards_reward?: number | null
+          updated_at?: string
+          vote_count_required?: number
+        }
+        Relationships: []
+      }
+      vote_platforms: {
+        Row: {
+          cooldown_seconds: number
+          created_at: string
+          description: string | null
+          display_order: number
+          enabled: boolean
+          icon: string | null
+          id: string
+          name: string
+          slug: string
+          updated_at: string
+          vote_url: string | null
+        }
+        Insert: {
+          cooldown_seconds?: number
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          enabled?: boolean
+          icon?: string | null
+          id?: string
+          name: string
+          slug: string
+          updated_at?: string
+          vote_url?: string | null
+        }
+        Update: {
+          cooldown_seconds?: number
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          enabled?: boolean
+          icon?: string | null
+          id?: string
+          name?: string
+          slug?: string
+          updated_at?: string
+          vote_url?: string | null
+        }
+        Relationships: []
+      }
+      votes: {
+        Row: {
+          created_at: string
+          external_vote_id: string | null
+          id: string
+          platform_id: string
+          player_id: string
+          reward_claimed: boolean
+          status: Database["public"]["Enums"]["vote_status"]
+          validated_at: string | null
+          voted_at: string
+        }
+        Insert: {
+          created_at?: string
+          external_vote_id?: string | null
+          id?: string
+          platform_id: string
+          player_id: string
+          reward_claimed?: boolean
+          status?: Database["public"]["Enums"]["vote_status"]
+          validated_at?: string | null
+          voted_at?: string
+        }
+        Update: {
+          created_at?: string
+          external_vote_id?: string | null
+          id?: string
+          platform_id?: string
+          player_id?: string
+          reward_claimed?: boolean
+          status?: Database["public"]["Enums"]["vote_status"]
+          validated_at?: string | null
+          voted_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "votes_platform_id_fkey"
+            columns: ["platform_id"]
+            isOneToOne: false
+            referencedRelation: "vote_platforms"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "votes_player_id_fkey"
+            columns: ["player_id"]
+            isOneToOne: false
+            referencedRelation: "players"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -157,6 +360,9 @@ export type Database = {
     }
     Enums: {
       app_role: "player" | "staff" | "admin" | "founder"
+      currency_type: "AETHER_COINS" | "SHARDS"
+      transaction_type: "CREDIT" | "DEBIT"
+      vote_status: "PENDING" | "VALIDATED" | "REWARDED" | "REJECTED"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -285,6 +491,9 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["player", "staff", "admin", "founder"],
+      currency_type: ["AETHER_COINS", "SHARDS"],
+      transaction_type: ["CREDIT", "DEBIT"],
+      vote_status: ["PENDING", "VALIDATED", "REWARDED", "REJECTED"],
     },
   },
 } as const
