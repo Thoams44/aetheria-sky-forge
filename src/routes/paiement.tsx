@@ -5,7 +5,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { CheckCircle2, Clock, PackageSearch, XCircle } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageShell";
 import { Section } from "@/components/aether/Section";
-import { AetherButton } from "@/components/aether/AetherButton";
+import { buttonClasses } from "@/components/aether/AetherButton";
 import { formatAmount } from "@/data/products";
 import { getStripeCheckoutStatus } from "@/lib/backend/checkout.functions";
 import { useCart } from "@/lib/cart";
@@ -177,12 +177,12 @@ function PaiementPage() {
               </div>
 
               <div className="mt-8 flex flex-wrap gap-3">
-                <AetherButton asChild>
-                  <Link to="/compte">Voir mon compte</Link>
-                </AetherButton>
-                <AetherButton asChild variant="ghost">
-                  <Link to="/boutique">Retour à la boutique</Link>
-                </AetherButton>
+                <Link to="/compte" className={buttonClasses()}>
+                  Voir mon compte
+                </Link>
+                <Link to="/boutique" className={buttonClasses("outline")}>
+                  Retour à la boutique
+                </Link>
               </div>
             </div>
           )}
@@ -209,9 +209,9 @@ function EmptyState({
       <p className="mt-4 font-display text-lg text-foreground">{title}</p>
       <p className="mt-2 text-sm text-muted-foreground">{text}</p>
       <div className="mt-7">
-        <AetherButton asChild variant="ghost">
-          <Link to="/boutique">Retour à la boutique</Link>
-        </AetherButton>
+        <Link to="/boutique" className={buttonClasses("outline")}>
+          Retour à la boutique
+        </Link>
       </div>
     </div>
   );
