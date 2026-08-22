@@ -24,6 +24,7 @@ import { Route as BoutiqueProductIdRouteImport } from './routes/boutique.$produc
 import { Route as ApiPublicCoreDeliveriesRouteImport } from './routes/api/public/core/deliveries'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 import { Route as ApiPublicVoteCallbackRouteImport } from './routes/api/public/vote/callback'
+import { Route as ApiPublicCoreDeliveriesClaimRouteImport } from './routes/api/public/core/deliveries.claim'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -101,6 +102,12 @@ const ApiPublicVoteCallbackRoute = ApiPublicVoteCallbackRouteImport.update({
   path: '/api/public/vote/callback',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicCoreDeliveriesClaimRoute =
+  ApiPublicCoreDeliveriesClaimRouteImport.update({
+    id: '/claim',
+    path: '/claim',
+    getParentRoute: () => ApiPublicCoreDeliveriesRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -115,9 +122,10 @@ export interface FileRoutesByFullPath {
   '/admin/tests': typeof AdminTestsRoute
   '/boutique/$productId': typeof BoutiqueProductIdRoute
   '/boutique/': typeof BoutiqueIndexRoute
-  '/api/public/core/deliveries': typeof ApiPublicCoreDeliveriesRoute
+  '/api/public/core/deliveries': typeof ApiPublicCoreDeliveriesRouteWithChildren
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/api/public/vote/callback': typeof ApiPublicVoteCallbackRoute
+  '/api/public/core/deliveries/claim': typeof ApiPublicCoreDeliveriesClaimRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -131,9 +139,10 @@ export interface FileRoutesByTo {
   '/admin/tests': typeof AdminTestsRoute
   '/boutique/$productId': typeof BoutiqueProductIdRoute
   '/boutique': typeof BoutiqueIndexRoute
-  '/api/public/core/deliveries': typeof ApiPublicCoreDeliveriesRoute
+  '/api/public/core/deliveries': typeof ApiPublicCoreDeliveriesRouteWithChildren
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/api/public/vote/callback': typeof ApiPublicVoteCallbackRoute
+  '/api/public/core/deliveries/claim': typeof ApiPublicCoreDeliveriesClaimRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -149,9 +158,10 @@ export interface FileRoutesById {
   '/admin/tests': typeof AdminTestsRoute
   '/boutique/$productId': typeof BoutiqueProductIdRoute
   '/boutique/': typeof BoutiqueIndexRoute
-  '/api/public/core/deliveries': typeof ApiPublicCoreDeliveriesRoute
+  '/api/public/core/deliveries': typeof ApiPublicCoreDeliveriesRouteWithChildren
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/api/public/vote/callback': typeof ApiPublicVoteCallbackRoute
+  '/api/public/core/deliveries/claim': typeof ApiPublicCoreDeliveriesClaimRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -171,6 +181,7 @@ export interface FileRouteTypes {
     | '/api/public/core/deliveries'
     | '/api/public/payments/webhook'
     | '/api/public/vote/callback'
+    | '/api/public/core/deliveries/claim'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -187,6 +198,7 @@ export interface FileRouteTypes {
     | '/api/public/core/deliveries'
     | '/api/public/payments/webhook'
     | '/api/public/vote/callback'
+    | '/api/public/core/deliveries/claim'
   id:
     | '__root__'
     | '/'
@@ -204,6 +216,7 @@ export interface FileRouteTypes {
     | '/api/public/core/deliveries'
     | '/api/public/payments/webhook'
     | '/api/public/vote/callback'
+    | '/api/public/core/deliveries/claim'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -217,7 +230,7 @@ export interface RootRouteChildren {
   ReglementRoute: typeof ReglementRoute
   VoteRoute: typeof VoteRoute
   AdminTestsRoute: typeof AdminTestsRoute
-  ApiPublicCoreDeliveriesRoute: typeof ApiPublicCoreDeliveriesRoute
+  ApiPublicCoreDeliveriesRoute: typeof ApiPublicCoreDeliveriesRouteWithChildren
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
   ApiPublicVoteCallbackRoute: typeof ApiPublicVoteCallbackRoute
 }
@@ -329,6 +342,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicVoteCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/core/deliveries/claim': {
+      id: '/api/public/core/deliveries/claim'
+      path: '/claim'
+      fullPath: '/api/public/core/deliveries/claim'
+      preLoaderRoute: typeof ApiPublicCoreDeliveriesClaimRouteImport
+      parentRoute: typeof ApiPublicCoreDeliveriesRoute
+    }
   }
 }
 
@@ -346,6 +366,20 @@ const BoutiqueRouteWithChildren = BoutiqueRoute._addFileChildren(
   BoutiqueRouteChildren,
 )
 
+interface ApiPublicCoreDeliveriesRouteChildren {
+  ApiPublicCoreDeliveriesClaimRoute: typeof ApiPublicCoreDeliveriesClaimRoute
+}
+
+const ApiPublicCoreDeliveriesRouteChildren: ApiPublicCoreDeliveriesRouteChildren =
+  {
+    ApiPublicCoreDeliveriesClaimRoute: ApiPublicCoreDeliveriesClaimRoute,
+  }
+
+const ApiPublicCoreDeliveriesRouteWithChildren =
+  ApiPublicCoreDeliveriesRoute._addFileChildren(
+    ApiPublicCoreDeliveriesRouteChildren,
+  )
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BoutiqueRoute: BoutiqueRouteWithChildren,
@@ -357,7 +391,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReglementRoute: ReglementRoute,
   VoteRoute: VoteRoute,
   AdminTestsRoute: AdminTestsRoute,
-  ApiPublicCoreDeliveriesRoute: ApiPublicCoreDeliveriesRoute,
+  ApiPublicCoreDeliveriesRoute: ApiPublicCoreDeliveriesRouteWithChildren,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
   ApiPublicVoteCallbackRoute: ApiPublicVoteCallbackRoute,
 }

@@ -85,11 +85,13 @@ export type Database = {
       deliveries: {
         Row: {
           attempts: number
+          claimed_by: string | null
           created_at: string
           delivered_at: string | null
           delivery_type: Database["public"]["Enums"]["delivery_type"]
           id: string
           last_error: string | null
+          lease_until: string | null
           next_attempt_at: string | null
           order_id: string | null
           payload: Json
@@ -99,11 +101,13 @@ export type Database = {
         }
         Insert: {
           attempts?: number
+          claimed_by?: string | null
           created_at?: string
           delivered_at?: string | null
           delivery_type: Database["public"]["Enums"]["delivery_type"]
           id?: string
           last_error?: string | null
+          lease_until?: string | null
           next_attempt_at?: string | null
           order_id?: string | null
           payload?: Json
@@ -113,11 +117,13 @@ export type Database = {
         }
         Update: {
           attempts?: number
+          claimed_by?: string | null
           created_at?: string
           delivered_at?: string | null
           delivery_type?: Database["public"]["Enums"]["delivery_type"]
           id?: string
           last_error?: string | null
+          lease_until?: string | null
           next_attempt_at?: string | null
           order_id?: string | null
           payload?: Json
@@ -659,6 +665,23 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      claim_delivery: {
+        Args: {
+          _claimed_by: string
+          _delivery_id: string
+          _lease_seconds: number
+        }
+        Returns: {
+          attempts: number
+          claimed_by: string
+          delivery_type: Database["public"]["Enums"]["delivery_type"]
+          id: string
+          lease_until: string
+          outcome: string
+          payload: Json
+          player_id: string
+        }[]
+      }
       current_player_id: { Args: never; Returns: string }
       has_role: {
         Args: {
