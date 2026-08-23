@@ -226,15 +226,40 @@ const emptyProfile = (username: string): VoteProfileDTO => ({
   owned: false,
 });
 
-/** Progression publique d'un pseudo (consultation, aucune réclamation possible). */
+/**
+ * Consultation d'une progression par pseudo — authentification obligatoire.
+ * Un joueur ne peut consulter que le profil lié à SON compte ; le staff/admin
+ * conserve la consultation en lecture seule via les contrôles existants.
+ */
 export const getVoteProfile = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
   .inputValidator((input: { username: string }) => ({
     username: String(input.username ?? "").trim().slice(0, 16),
   }))
-  .handler(async ({ data }): Promise<VoteProfileDTO> => {
+  .handler(async ({ data, context }): Promise<VoteProfileDTO> => {
     if (data.username.length < 3) return emptyProfile(data.username);
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+    // Joueur lié au compte authentifié (jamais un identifiant fourni par le navigateur).
+    const { data: ownPlayer } = await supabaseAdmin
+      .from("players")
+      .select("id, minecraft_username, aether_coins_balance")
+      .eq("user_id", context.userId)
+      .maybeSingle();
+
+    const owned =
+      !!ownPlayer?.minecraft_username &&
+      ownPlayer.minecraft_username.toLowerCase() === data.username.toLowerCase();
+
+    if (owned) return buildProfile(supabaseAdmin, ownPlayer as any, true);
+
+    // Contrôle de permission existant : staff / admin uniquement.
+    const { data: isStaff } = await context.supabase.rpc("is_staff", {
+      _user_id: context.userId,
+    });
+    if (!isStaff) return emptyProfile(data.username);
+
     const { data: player } = await supabaseAdmin
       .from("players")
       .select("id, minecraft_username, aether_coins_balance")
@@ -244,6 +269,7 @@ export const getVoteProfile = createServerFn({ method: "POST" })
     if (!player) return emptyProfile(data.username);
     return buildProfile(supabaseAdmin, player as any, false);
   });
+
 
 /** Progression du joueur connecté — seule variante autorisant la réclamation. */
 export const getMyVoteProfile = createServerFn({ method: "GET" })
