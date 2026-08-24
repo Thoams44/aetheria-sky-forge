@@ -11,9 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BoutiqueRouteImport } from './routes/boutique'
+import { Route as CgvRouteImport } from './routes/cgv'
 import { Route as ClassementsRouteImport } from './routes/classements'
 import { Route as CommandeRouteImport } from './routes/commande'
 import { Route as CompteRouteImport } from './routes/compte'
+import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
+import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as PaiementRouteImport } from './routes/paiement'
 import { Route as PanierRouteImport } from './routes/panier'
 import { Route as ReglementRouteImport } from './routes/reglement'
@@ -36,6 +39,11 @@ const BoutiqueRoute = BoutiqueRouteImport.update({
   path: '/boutique',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CgvRoute = CgvRouteImport.update({
+  id: '/cgv',
+  path: '/cgv',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ClassementsRoute = ClassementsRouteImport.update({
   id: '/classements',
   path: '/classements',
@@ -49,6 +57,16 @@ const CommandeRoute = CommandeRouteImport.update({
 const CompteRoute = CompteRouteImport.update({
   id: '/compte',
   path: '/compte',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfidentialiteRoute = ConfidentialiteRouteImport.update({
+  id: '/confidentialite',
+  path: '/confidentialite',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
+  id: '/mentions-legales',
+  path: '/mentions-legales',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PaiementRoute = PaiementRouteImport.update({
@@ -112,9 +130,12 @@ const ApiPublicCoreDeliveriesClaimRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/boutique': typeof BoutiqueRouteWithChildren
+  '/cgv': typeof CgvRoute
   '/classements': typeof ClassementsRoute
   '/commande': typeof CommandeRoute
   '/compte': typeof CompteRoute
+  '/confidentialite': typeof ConfidentialiteRoute
+  '/mentions-legales': typeof MentionsLegalesRoute
   '/paiement': typeof PaiementRoute
   '/panier': typeof PanierRoute
   '/reglement': typeof ReglementRoute
@@ -129,9 +150,12 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cgv': typeof CgvRoute
   '/classements': typeof ClassementsRoute
   '/commande': typeof CommandeRoute
   '/compte': typeof CompteRoute
+  '/confidentialite': typeof ConfidentialiteRoute
+  '/mentions-legales': typeof MentionsLegalesRoute
   '/paiement': typeof PaiementRoute
   '/panier': typeof PanierRoute
   '/reglement': typeof ReglementRoute
@@ -148,9 +172,12 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/boutique': typeof BoutiqueRouteWithChildren
+  '/cgv': typeof CgvRoute
   '/classements': typeof ClassementsRoute
   '/commande': typeof CommandeRoute
   '/compte': typeof CompteRoute
+  '/confidentialite': typeof ConfidentialiteRoute
+  '/mentions-legales': typeof MentionsLegalesRoute
   '/paiement': typeof PaiementRoute
   '/panier': typeof PanierRoute
   '/reglement': typeof ReglementRoute
@@ -168,9 +195,12 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/boutique'
+    | '/cgv'
     | '/classements'
     | '/commande'
     | '/compte'
+    | '/confidentialite'
+    | '/mentions-legales'
     | '/paiement'
     | '/panier'
     | '/reglement'
@@ -185,9 +215,12 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/cgv'
     | '/classements'
     | '/commande'
     | '/compte'
+    | '/confidentialite'
+    | '/mentions-legales'
     | '/paiement'
     | '/panier'
     | '/reglement'
@@ -203,9 +236,12 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/boutique'
+    | '/cgv'
     | '/classements'
     | '/commande'
     | '/compte'
+    | '/confidentialite'
+    | '/mentions-legales'
     | '/paiement'
     | '/panier'
     | '/reglement'
@@ -222,9 +258,12 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BoutiqueRoute: typeof BoutiqueRouteWithChildren
+  CgvRoute: typeof CgvRoute
   ClassementsRoute: typeof ClassementsRoute
   CommandeRoute: typeof CommandeRoute
   CompteRoute: typeof CompteRoute
+  ConfidentialiteRoute: typeof ConfidentialiteRoute
+  MentionsLegalesRoute: typeof MentionsLegalesRoute
   PaiementRoute: typeof PaiementRoute
   PanierRoute: typeof PanierRoute
   ReglementRoute: typeof ReglementRoute
@@ -251,6 +290,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BoutiqueRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cgv': {
+      id: '/cgv'
+      path: '/cgv'
+      fullPath: '/cgv'
+      preLoaderRoute: typeof CgvRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/classements': {
       id: '/classements'
       path: '/classements'
@@ -270,6 +316,20 @@ declare module '@tanstack/react-router' {
       path: '/compte'
       fullPath: '/compte'
       preLoaderRoute: typeof CompteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/confidentialite': {
+      id: '/confidentialite'
+      path: '/confidentialite'
+      fullPath: '/confidentialite'
+      preLoaderRoute: typeof ConfidentialiteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mentions-legales': {
+      id: '/mentions-legales'
+      path: '/mentions-legales'
+      fullPath: '/mentions-legales'
+      preLoaderRoute: typeof MentionsLegalesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/paiement': {
@@ -383,9 +443,12 @@ const ApiPublicCoreDeliveriesRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BoutiqueRoute: BoutiqueRouteWithChildren,
+  CgvRoute: CgvRoute,
   ClassementsRoute: ClassementsRoute,
   CommandeRoute: CommandeRoute,
   CompteRoute: CompteRoute,
+  ConfidentialiteRoute: ConfidentialiteRoute,
+  MentionsLegalesRoute: MentionsLegalesRoute,
   PaiementRoute: PaiementRoute,
   PanierRoute: PanierRoute,
   ReglementRoute: ReglementRoute,
