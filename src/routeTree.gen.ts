@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BoutiqueRouteImport } from './routes/boutique'
+import { Route as CgvRouteImport } from './routes/cgv'
 import { Route as ClassementsRouteImport } from './routes/classements'
 import { Route as CommandeRouteImport } from './routes/commande'
 import { Route as CompteRouteImport } from './routes/compte'
@@ -34,6 +35,11 @@ const IndexRoute = IndexRouteImport.update({
 const BoutiqueRoute = BoutiqueRouteImport.update({
   id: '/boutique',
   path: '/boutique',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CgvRoute = CgvRouteImport.update({
+  id: '/cgv',
+  path: '/cgv',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ClassementsRoute = ClassementsRouteImport.update({
@@ -112,6 +118,7 @@ const ApiPublicCoreDeliveriesClaimRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/boutique': typeof BoutiqueRouteWithChildren
+  '/cgv': typeof CgvRoute
   '/classements': typeof ClassementsRoute
   '/commande': typeof CommandeRoute
   '/compte': typeof CompteRoute
@@ -129,6 +136,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cgv': typeof CgvRoute
   '/classements': typeof ClassementsRoute
   '/commande': typeof CommandeRoute
   '/compte': typeof CompteRoute
@@ -148,6 +156,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/boutique': typeof BoutiqueRouteWithChildren
+  '/cgv': typeof CgvRoute
   '/classements': typeof ClassementsRoute
   '/commande': typeof CommandeRoute
   '/compte': typeof CompteRoute
@@ -168,6 +177,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/boutique'
+    | '/cgv'
     | '/classements'
     | '/commande'
     | '/compte'
@@ -185,6 +195,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/cgv'
     | '/classements'
     | '/commande'
     | '/compte'
@@ -203,6 +214,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/boutique'
+    | '/cgv'
     | '/classements'
     | '/commande'
     | '/compte'
@@ -222,6 +234,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BoutiqueRoute: typeof BoutiqueRouteWithChildren
+  CgvRoute: typeof CgvRoute
   ClassementsRoute: typeof ClassementsRoute
   CommandeRoute: typeof CommandeRoute
   CompteRoute: typeof CompteRoute
@@ -249,6 +262,13 @@ declare module '@tanstack/react-router' {
       path: '/boutique'
       fullPath: '/boutique'
       preLoaderRoute: typeof BoutiqueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cgv': {
+      id: '/cgv'
+      path: '/cgv'
+      fullPath: '/cgv'
+      preLoaderRoute: typeof CgvRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/classements': {
@@ -383,6 +403,7 @@ const ApiPublicCoreDeliveriesRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BoutiqueRoute: BoutiqueRouteWithChildren,
+  CgvRoute: CgvRoute,
   ClassementsRoute: ClassementsRoute,
   CommandeRoute: CommandeRoute,
   CompteRoute: CompteRoute,
