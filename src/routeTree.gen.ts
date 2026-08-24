@@ -15,6 +15,7 @@ import { Route as CgvRouteImport } from './routes/cgv'
 import { Route as ClassementsRouteImport } from './routes/classements'
 import { Route as CommandeRouteImport } from './routes/commande'
 import { Route as CompteRouteImport } from './routes/compte'
+import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
 import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as PaiementRouteImport } from './routes/paiement'
 import { Route as PanierRouteImport } from './routes/panier'
@@ -56,6 +57,11 @@ const CommandeRoute = CommandeRouteImport.update({
 const CompteRoute = CompteRouteImport.update({
   id: '/compte',
   path: '/compte',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfidentialiteRoute = ConfidentialiteRouteImport.update({
+  id: '/confidentialite',
+  path: '/confidentialite',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
@@ -128,6 +134,7 @@ export interface FileRoutesByFullPath {
   '/classements': typeof ClassementsRoute
   '/commande': typeof CommandeRoute
   '/compte': typeof CompteRoute
+  '/confidentialite': typeof ConfidentialiteRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/paiement': typeof PaiementRoute
   '/panier': typeof PanierRoute
@@ -147,6 +154,7 @@ export interface FileRoutesByTo {
   '/classements': typeof ClassementsRoute
   '/commande': typeof CommandeRoute
   '/compte': typeof CompteRoute
+  '/confidentialite': typeof ConfidentialiteRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/paiement': typeof PaiementRoute
   '/panier': typeof PanierRoute
@@ -168,6 +176,7 @@ export interface FileRoutesById {
   '/classements': typeof ClassementsRoute
   '/commande': typeof CommandeRoute
   '/compte': typeof CompteRoute
+  '/confidentialite': typeof ConfidentialiteRoute
   '/mentions-legales': typeof MentionsLegalesRoute
   '/paiement': typeof PaiementRoute
   '/panier': typeof PanierRoute
@@ -190,6 +199,7 @@ export interface FileRouteTypes {
     | '/classements'
     | '/commande'
     | '/compte'
+    | '/confidentialite'
     | '/mentions-legales'
     | '/paiement'
     | '/panier'
@@ -209,6 +219,7 @@ export interface FileRouteTypes {
     | '/classements'
     | '/commande'
     | '/compte'
+    | '/confidentialite'
     | '/mentions-legales'
     | '/paiement'
     | '/panier'
@@ -229,6 +240,7 @@ export interface FileRouteTypes {
     | '/classements'
     | '/commande'
     | '/compte'
+    | '/confidentialite'
     | '/mentions-legales'
     | '/paiement'
     | '/panier'
@@ -250,6 +262,7 @@ export interface RootRouteChildren {
   ClassementsRoute: typeof ClassementsRoute
   CommandeRoute: typeof CommandeRoute
   CompteRoute: typeof CompteRoute
+  ConfidentialiteRoute: typeof ConfidentialiteRoute
   MentionsLegalesRoute: typeof MentionsLegalesRoute
   PaiementRoute: typeof PaiementRoute
   PanierRoute: typeof PanierRoute
@@ -303,6 +316,13 @@ declare module '@tanstack/react-router' {
       path: '/compte'
       fullPath: '/compte'
       preLoaderRoute: typeof CompteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/confidentialite': {
+      id: '/confidentialite'
+      path: '/confidentialite'
+      fullPath: '/confidentialite'
+      preLoaderRoute: typeof ConfidentialiteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mentions-legales': {
@@ -427,6 +447,7 @@ const rootRouteChildren: RootRouteChildren = {
   ClassementsRoute: ClassementsRoute,
   CommandeRoute: CommandeRoute,
   CompteRoute: CompteRoute,
+  ConfidentialiteRoute: ConfidentialiteRoute,
   MentionsLegalesRoute: MentionsLegalesRoute,
   PaiementRoute: PaiementRoute,
   PanierRoute: PanierRoute,
