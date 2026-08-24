@@ -15,6 +15,7 @@ import { Route as CgvRouteImport } from './routes/cgv'
 import { Route as ClassementsRouteImport } from './routes/classements'
 import { Route as CommandeRouteImport } from './routes/commande'
 import { Route as CompteRouteImport } from './routes/compte'
+import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as PaiementRouteImport } from './routes/paiement'
 import { Route as PanierRouteImport } from './routes/panier'
 import { Route as ReglementRouteImport } from './routes/reglement'
@@ -55,6 +56,11 @@ const CommandeRoute = CommandeRouteImport.update({
 const CompteRoute = CompteRouteImport.update({
   id: '/compte',
   path: '/compte',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
+  id: '/mentions-legales',
+  path: '/mentions-legales',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PaiementRoute = PaiementRouteImport.update({
@@ -122,6 +128,7 @@ export interface FileRoutesByFullPath {
   '/classements': typeof ClassementsRoute
   '/commande': typeof CommandeRoute
   '/compte': typeof CompteRoute
+  '/mentions-legales': typeof MentionsLegalesRoute
   '/paiement': typeof PaiementRoute
   '/panier': typeof PanierRoute
   '/reglement': typeof ReglementRoute
@@ -140,6 +147,7 @@ export interface FileRoutesByTo {
   '/classements': typeof ClassementsRoute
   '/commande': typeof CommandeRoute
   '/compte': typeof CompteRoute
+  '/mentions-legales': typeof MentionsLegalesRoute
   '/paiement': typeof PaiementRoute
   '/panier': typeof PanierRoute
   '/reglement': typeof ReglementRoute
@@ -160,6 +168,7 @@ export interface FileRoutesById {
   '/classements': typeof ClassementsRoute
   '/commande': typeof CommandeRoute
   '/compte': typeof CompteRoute
+  '/mentions-legales': typeof MentionsLegalesRoute
   '/paiement': typeof PaiementRoute
   '/panier': typeof PanierRoute
   '/reglement': typeof ReglementRoute
@@ -181,6 +190,7 @@ export interface FileRouteTypes {
     | '/classements'
     | '/commande'
     | '/compte'
+    | '/mentions-legales'
     | '/paiement'
     | '/panier'
     | '/reglement'
@@ -199,6 +209,7 @@ export interface FileRouteTypes {
     | '/classements'
     | '/commande'
     | '/compte'
+    | '/mentions-legales'
     | '/paiement'
     | '/panier'
     | '/reglement'
@@ -218,6 +229,7 @@ export interface FileRouteTypes {
     | '/classements'
     | '/commande'
     | '/compte'
+    | '/mentions-legales'
     | '/paiement'
     | '/panier'
     | '/reglement'
@@ -238,6 +250,7 @@ export interface RootRouteChildren {
   ClassementsRoute: typeof ClassementsRoute
   CommandeRoute: typeof CommandeRoute
   CompteRoute: typeof CompteRoute
+  MentionsLegalesRoute: typeof MentionsLegalesRoute
   PaiementRoute: typeof PaiementRoute
   PanierRoute: typeof PanierRoute
   ReglementRoute: typeof ReglementRoute
@@ -290,6 +303,13 @@ declare module '@tanstack/react-router' {
       path: '/compte'
       fullPath: '/compte'
       preLoaderRoute: typeof CompteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mentions-legales': {
+      id: '/mentions-legales'
+      path: '/mentions-legales'
+      fullPath: '/mentions-legales'
+      preLoaderRoute: typeof MentionsLegalesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/paiement': {
@@ -407,6 +427,7 @@ const rootRouteChildren: RootRouteChildren = {
   ClassementsRoute: ClassementsRoute,
   CommandeRoute: CommandeRoute,
   CompteRoute: CompteRoute,
+  MentionsLegalesRoute: MentionsLegalesRoute,
   PaiementRoute: PaiementRoute,
   PanierRoute: PanierRoute,
   ReglementRoute: ReglementRoute,
