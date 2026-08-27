@@ -7,7 +7,7 @@ export function PageHeader({
 }: {
   eyebrow: string;
   title: ReactNode;
-  description?: string;
+  description?: string | undefined;
 }) {
   return (
     <div className="relative overflow-hidden border-b border-border bg-surface/30">
